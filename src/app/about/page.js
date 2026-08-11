@@ -1,170 +1,193 @@
 import Image from "next/image";
-
+import Link from "next/link";
 import PageBanner from "@/components/PageBanner";
 import SectionTitle from "@/components/SectionTitle";
+import CTASection from "@/components/CTASection";
 import DDS from "@/components/img/Dds.png";
+import {
+  ShieldCheck,
+  Award,
+  Users,
+  Activity,
+  CheckCircle2,
+  Building2,
+  Clock,
+  Wrench,
+  ArrowRight,
+  Sparkles,
+} from "lucide-react";
 
 export default function AboutPage() {
+  const pillars = [
+    {
+      icon: <ShieldCheck className="w-8 h-8 text-blue-600" />,
+      title: "Certified Excellence",
+      desc: "Every biomedical device, reagent, and diagnostic kit complies with ISO 13485 and international health standards.",
+    },
+    {
+      icon: <Activity className="w-8 h-8 text-teal-600" />,
+      title: "Diagnostic Precision",
+      desc: "Our analyzers ensure repeatable, accurate results for routine and critical pathology testing.",
+    },
+    {
+      icon: <Clock className="w-8 h-8 text-amber-600" />,
+      title: "24/7 AMC & Technical Support",
+      desc: "Dedicated service engineers provide rapid 24-hour on-site visits to prevent laboratory downtime.",
+    },
+    {
+      icon: <Users className="w-8 h-8 text-indigo-600" />,
+      title: "Nationwide Supply Network",
+      desc: "Fast, reliable cold-chain shipping ensuring reagents and consumables arrive at peak stability.",
+    },
+  ];
+
+  const milestones = [
+    { number: "10+", label: "Years Industry Leadership" },
+    { number: "500+", label: "Diagnostic Labs Serviced" },
+    { number: "10,000+", label: "Reagents Delivered" },
+    { number: "99.8%", label: "Lab Service Uptime" },
+  ];
+
   return (
     <>
-      {/* Banner */}
+      {/* Page Banner */}
       <PageBanner
         title="About Central Biomedicals"
-        subtitle="Delivering trusted diagnostic and biomedical technologies with innovation, quality, and healthcare precision."
+        subtitle="Empowering healthcare institutions, pathology laboratories, and diagnostic centers with world-class biomedical systems and dedicated service support."
       />
 
-      {/* About Section */}
+      {/* Main About Story Section */}
       <section className="relative overflow-hidden bg-white py-24">
+        {/* Background Glow */}
+        <div className="absolute top-1/4 left-0 h-[450px] w-[450px] rounded-full bg-blue-100/40 blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-10 right-0 h-[350px] w-[350px] rounded-full bg-teal-100/40 blur-[130px] pointer-events-none" />
 
-        {/* Background */}
-
-        <div className="absolute -top-40 left-1/2 h-[550px] w-[550px] -translate-x-1/2 rounded-full bg-[#CBD5E1]/10 blur-[150px]" />
-
-        <div className="absolute bottom-0 left-0 h-[300px] w-[300px] rounded-full bg-[#E2E8F0]/15 blur-[120px]" />
-
-        <div
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#94A3B8 1px, transparent 1px), linear-gradient(90deg,#94A3B8 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-        />
-
-        <div className="container-custom relative z-10 grid items-center gap-20 lg:grid-cols-2">
-
-          {/* Left */}
-
+        <div className="container-custom relative z-10 grid items-center gap-16 lg:grid-cols-2">
+          {/* Left Visual Column */}
           <div className="relative">
-
-            {/* Image */}
-
-            <div className="overflow-hidden rounded-[40px] border border-[#CBD5E1]/15 bg-white p-10 shadow-[0_30px_80px_rgba(15,23,42,.08)]">
-
+            {/* Main Visual Frame */}
+            <div className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-xl shadow-slate-200/60">
               <Image
                 src={DDS}
-                alt="About"
+                alt="Central Biomedicals Diagnostic Systems"
                 width={1200}
                 height={900}
-                className="h-[550px] w-full object-contain transition duration-700 hover:scale-105"
+                className="h-[460px] w-full object-contain transition duration-500 hover:scale-105"
               />
-
             </div>
 
-            {/* Experience Card */}
-
-            <div className="absolute -bottom-8 left-8 hidden rounded-[28px] border border-[#CBD5E1]/20 bg-white p-7 shadow-[0_20px_60px_rgba(15,23,42,.15)] lg:block">
-
-              <h3 className="text-5xl font-black text-[#64748B]">
-
-                10+
-
-              </h3>
-
-              <p className="mt-2 text-slate-600">
-
+            {/* Experience Floating Badge */}
+            <div className="absolute -bottom-6 left-6 hidden rounded-2xl border border-slate-200 bg-slate-900 p-6 text-white shadow-2xl lg:block">
+              <h3 className="text-4xl font-black text-amber-400">10+</h3>
+              <p className="mt-1 text-xs font-bold text-slate-300 uppercase tracking-wider">
                 Years of Excellence
-
               </p>
-
             </div>
 
-            {/* Floating Badge */}
-
-            <div className="absolute right-8 top-8 hidden rounded-full bg-[#F8FAFC] px-5 py-2 text-sm font-semibold text-[#64748B] shadow-lg lg:block">
-
-              ISO Certified
-
+            {/* ISO Certification Badge */}
+            <div className="absolute -top-4 right-6 hidden rounded-full bg-teal-600 px-5 py-2 text-xs font-bold text-white shadow-lg border border-teal-400/40 lg:flex items-center gap-2">
+              <Award size={16} />
+              <span>ISO 9001:2015 Certified</span>
             </div>
-
           </div>
 
-          {/* Right */}
-
+          {/* Right Text Column */}
           <div>
-
             <SectionTitle
               badge="Who We Are"
-              title="Trusted Partner in Biomedical & Diagnostics"
-              description="We provide advanced diagnostic and biomedical solutions focused on healthcare innovation, laboratory precision and modern medical excellence."
+              title="Your Trusted Partner in Biomedical Technology"
+              description="Central Biomedicals is a premier provider of automated biochemistry analyzers, hematology instruments, electrolyte testing systems, and high-purity clinical reagents."
             />
 
-            <p className="mt-8 text-lg leading-9 text-slate-600">
-
-              At Central Biomedicals, we are committed to delivering
-              premium-quality healthcare and biomedical technologies
-              designed to improve diagnostics, laboratory performance
-              and medical efficiency for hospitals, pathology labs and
-              research institutions.
-
+            <p className="mt-6 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
+              For over a decade, we have partnered with hospitals, diagnostic labs, and medical centers across India to supply state-of-the-art diagnostic machinery. Our focus is delivering reliable equipment backed by quick technical response and preventive maintenance.
             </p>
 
-            <p className="mt-6 text-lg leading-9 text-slate-600">
-
-              Our mission is to empower healthcare professionals with
-              trusted equipment, expert consultation, nationwide service
-              support and innovative biomedical solutions tailored to
-              modern healthcare requirements.
-
+            <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
+              Whether setting up a new pathology lab or maintaining high-volume biochemistry testing, our team of trained biomedical engineers ensures maximum diagnostic precision and minimum downtime.
             </p>
 
-            {/* Features */}
-
-            <div className="mt-12 grid gap-6 sm:grid-cols-2">
-
-              <div className="group rounded-[28px] border border-[#CBD5E1]/15 bg-white p-6 shadow-[0_15px_40px_rgba(15,23,42,.08)] transition-all duration-500 hover:-translate-y-2 hover:border-[#94A3B8]/40">
-
-                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F8FAFC] text-[#64748B] text-2xl">
-
-                  🏥
-
+            {/* Quick Checklist */}
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              {[
+                "Authorized Equipment Supplier",
+                "Cold-Chain Reagent Delivery",
+                "Annual Maintenance Contracts (AMC)",
+                "NABL Standard Compliance",
+              ].map((item, idx) => (
+                <div key={idx} className="flex items-center gap-2.5 text-sm font-bold text-slate-800">
+                  <CheckCircle2 size={18} className="text-teal-600 flex-shrink-0" />
+                  <span>{item}</span>
                 </div>
-
-                <h4 className="text-xl font-bold text-[#1E293B]">
-
-                  Premium Equipment
-
-                </h4>
-
-                <p className="mt-3 leading-7 text-slate-600">
-
-                  High-end biomedical and laboratory
-                  technologies for modern diagnostics.
-
-                </p>
-
-              </div>
-
-              <div className="group rounded-[28px] border border-[#CBD5E1]/15 bg-white p-6 shadow-[0_15px_40px_rgba(15,23,42,.08)] transition-all duration-500 hover:-translate-y-2 hover:border-[#94A3B8]/40">
-
-                <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#F8FAFC] text-[#64748B] text-2xl">
-
-                  🤝
-
-                </div>
-
-                <h4 className="text-xl font-bold text-[#1E293B]">
-
-                  Expert Support
-
-                </h4>
-
-                <p className="mt-3 leading-7 text-slate-600">
-
-                  Trusted consultation, installation,
-                  AMC and nationwide technical support.
-
-                </p>
-
-              </div>
-
+              ))}
             </div>
 
+            {/* Action Call */}
+            <div className="mt-10 flex flex-wrap items-center gap-4">
+              <Link href="/services">
+                <button className="flex h-13 items-center gap-2 rounded-xl bg-slate-900 px-7 text-sm font-bold text-white shadow-lg transition hover:bg-blue-600 hover:scale-105">
+                  <span>Explore Our Services</span>
+                  <ArrowRight size={16} />
+                </button>
+              </Link>
+              <Link href="/contact">
+                <button className="flex h-13 items-center gap-2 rounded-xl border border-slate-300 bg-white px-7 text-sm font-bold text-slate-800 hover:bg-slate-50">
+                  Contact Us
+                </button>
+              </Link>
+            </div>
           </div>
-
         </div>
-
       </section>
+
+      {/* Core Values / Pillars Section */}
+      <section className="bg-slate-900 py-24 text-white relative overflow-hidden">
+        {/* Glow */}
+        <div className="absolute top-0 right-1/4 h-[400px] w-[400px] rounded-full bg-blue-500/10 blur-[150px] pointer-events-none" />
+
+        <div className="container-custom relative z-10">
+          <SectionTitle
+            badge="Our Core Pillars"
+            title="Driven by Precision & Quality"
+            description="Our commitment to excellence guides everything we do, from equipment selection to technical AMC support."
+            center
+          />
+
+          <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+            {pillars.map((item, idx) => (
+              <div
+                key={idx}
+                className="group rounded-3xl border border-slate-800 bg-slate-950/80 p-8 shadow-xl transition-all duration-300 hover:-translate-y-2 hover:border-slate-700 hover:bg-slate-900"
+              >
+                <div className="mb-6 inline-flex rounded-2xl bg-slate-900 p-4 border border-slate-800 group-hover:scale-110 transition-transform">
+                  {item.icon}
+                </div>
+                <h3 className="text-xl font-bold text-white">{item.title}</h3>
+                <p className="mt-3 text-sm text-slate-300 leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Counter Section */}
+      <section className="py-20 bg-slate-50 border-y border-slate-200">
+        <div className="container-custom">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+            {milestones.map((ms, idx) => (
+              <div key={idx} className="rounded-3xl border border-slate-200 bg-white p-8 text-center shadow-lg">
+                <h3 className="text-4xl lg:text-5xl font-black text-slate-900">{ms.number}</h3>
+                <p className="mt-2 text-sm font-bold text-slate-600 uppercase tracking-wider">{ms.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <CTASection />
     </>
   );
 }

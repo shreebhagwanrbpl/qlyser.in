@@ -5,24 +5,15 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Mail,
-  Phone,
-  MapPin,
-} from "lucide-react";
+import { Mail, Phone, MapPin, ShieldCheck, Heart } from "lucide-react";
 
 export default function Footer() {
-  const [contactInfo, setContactInfo] =
-    useState([]);
+  const [contactInfo, setContactInfo] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [districtData, setDistrictData] =
-    useState(null);
+  const [districtData, setDistrictData] = useState(null);
 
   const pathname = usePathname();
-
-  const pathParts = pathname
-    .split("/")
-    .filter(Boolean);
+  const pathParts = pathname.split("/").filter(Boolean);
 
   const staticRoutes = [
     "about",
@@ -33,8 +24,7 @@ export default function Footer() {
   ];
 
   const district =
-    pathParts.length > 0 &&
-      !staticRoutes.includes(pathParts[0])
+    pathParts.length > 0 && !staticRoutes.includes(pathParts[0])
       ? pathParts[0]
       : "";
 
@@ -42,46 +32,27 @@ export default function Footer() {
     const loadContact = async () => {
       try {
         const snap = await getDoc(
-          doc(
-            db,
-            "websites",
-            "centralbiomedicals",
-            "pages",
-            "contact"
-          )
+          doc(db, "websites", "centralbiomedicals", "pages", "contact")
         );
-
         if (snap.exists()) {
-          setContactInfo(
-            snap.data().contactInfo || []
-          );
+          setContactInfo(snap.data().contactInfo || []);
         }
-
-        setLoading(false);
       } catch (err) {
         console.log(err);
+      } finally {
         setLoading(false);
       }
     };
-
     loadContact();
   }, []);
 
   useEffect(() => {
     const loadDistrict = async () => {
       if (!district) return;
-
       try {
         const snap = await getDoc(
-          doc(
-            db,
-            "websites",
-            "centralbiomedicals",
-            "districts",
-            district
-          )
+          doc(db, "websites", "centralbiomedicals", "districts", district)
         );
-
         if (snap.exists()) {
           setDistrictData(snap.data());
         }
@@ -89,271 +60,127 @@ export default function Footer() {
         console.log(err);
       }
     };
-
     loadDistrict();
   }, [district]);
 
   const phone =
-    contactInfo.find(
-      (x) => x.label === "Phone Number"
-    )?.value || "";
+    contactInfo.find((x) => x.label === "Phone Number")?.value || "+91 98765 43210";
 
   const email =
-    contactInfo.find(
-      (x) => x.label === "Email Address"
-    )?.value || "";
+    contactInfo.find((x) => x.label === "Email Address")?.value || "info@centralbiomedicals.com";
 
   const address =
-    contactInfo.find(
-      (x) => x.label === "Office Address"
-    )?.value || "";
+    contactInfo.find((x) => x.label === "Office Address")?.value || "Central Biomedicals Corporate Office, Healthcare Tech Zone, India";
 
-  const dynamicAddress =
-    districtData
-      ? `${districtData.district}, ${districtData.state}, India`
-      : address;
+  const dynamicAddress = districtData
+    ? `${districtData.district}, ${districtData.state}, India`
+    : address;
 
   const makeLink = (path) => {
     if (!district) return path;
-
-    if (path === "/") {
-      return `/${district}`;
-    }
-
+    if (path === "/") return `/${district}`;
     return `/${district}${path}`;
   };
-  if (loading) {
-    return (
-      <footer className="bg-white border-t border-slate-200">
-        <div className="container-custom py-16">
 
-          <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-10">
-
-            {[...Array(4)].map((_, i) => (
-              <div key={i}>
-                <div className="h-8 w-40 bg-slate-200 rounded animate-pulse mb-6" />
-
-                {[...Array(5)].map((_, j) => (
-                  <div
-                    key={j}
-                    className="h-5 bg-slate-200 rounded animate-pulse mb-4"
-                  />
-                ))}
-              </div>
-            ))}
-
-          </div>
-
-          <div className="border-t border-slate-200 mt-12 pt-6">
-            <div className="h-5 w-72 bg-slate-200 rounded animate-pulse" />
-          </div>
-
-        </div>
-      </footer>
-    );
-  }
   return (
-    <footer className="relative overflow-hidden bg-[#0F172A] text-white">
-
+    <footer className="relative overflow-hidden bg-slate-950 text-white border-t border-slate-800">
       {/* Background Glow */}
+      <div className="absolute top-0 left-1/4 h-80 w-80 rounded-full bg-blue-500/10 blur-[130px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-teal-500/10 blur-[120px] pointer-events-none" />
 
-      <div className="absolute -top-40 left-0 h-80 w-80 rounded-full bg-[#slate-200]/10 blur-[120px]" />
-
-      <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-slate-400/10 blur-[120px]" />
-
-      <div
-        className="absolute inset-0 opacity-[0.05]"
-        style={{
-          backgroundImage:
-            "linear-gradient(#ffffff 1px, transparent 1px), linear-gradient(90deg,#ffffff 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
-      />
-
-      <div className="relative z-10 container-custom py-20">
-
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-
-          {/* Company */}
-
+      <div className="relative z-10 container-custom py-16">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+          {/* Col 1: Brand & Tagline */}
           <div>
-
-            <h2 className="text-3xl font-black">
-
-              <span className="text-slate-300">
-                Central
-              </span>
-
-              <span className="text-white">
-                {" "}Biomedicals
-              </span>
-
-              <span className="text-white">
-
-                {" "}Biomedicals
-
-              </span>
-
+            <h2 className="text-2xl font-black tracking-tight">
+              <span className="text-cyan-400">Central</span>{" "}
+              <span className="text-white">Biomedicals</span>
             </h2>
 
-            <p className="mt-6 leading-8 text-slate-300">
-
-              Delivering trusted biomedical,
-              diagnostic and laboratory
-              solutions with innovation,
-              precision and nationwide
-              healthcare support.
-
+            <p className="mt-4 text-sm leading-relaxed text-slate-300">
+              Delivering trusted diagnostic machinery, biochemistry reagents, hematology solutions, and 24/7 technical AMC maintenance support across India.
             </p>
 
+            <div className="mt-5 flex items-center gap-2 text-xs font-bold text-teal-400">
+              <ShieldCheck size={16} />
+              <span>ISO 9001:2015 Certified Equipment</span>
+            </div>
           </div>
 
-          {/* Links */}
-
+          {/* Col 2: Quick Links */}
           <div>
-
-            <h3 className="mb-6 text-xl font-bold text-slate-300">
-
+            <h3 className="mb-4 text-base font-bold text-white uppercase tracking-wider">
               Quick Links
-
             </h3>
-
-            <div className="flex flex-col gap-4">
-
+            <div className="flex flex-col gap-2.5 text-sm">
               {[
                 ["Home", "/"],
-                ["About", "/about"],
-                ["Services", "/services"],
-                ["Products", "/items"],
-                ["Contact", "/contact"],
+                ["About Us", "/about"],
+                ["Biomedical Services", "/services"],
+                ["Product Catalog", "/items"],
+                ["Contact Support", "/contact"],
               ].map(([name, url]) => (
-
                 <Link
                   key={name}
                   href={makeLink(url)}
-                  className="text-slate-300 transition hover:translate-x-2 hover:text-slate-300"
+                  className="text-slate-300 transition-colors hover:text-cyan-400 hover:translate-x-1"
                 >
-
                   {name}
-
                 </Link>
-
               ))}
-
             </div>
-
           </div>
 
-          {/* Services */}
-
+          {/* Col 3: Categories & Offerings */}
           <div>
-
-            <h3 className="mb-6 text-xl font-bold text-slate-300">
-
-              Services
-
+            <h3 className="mb-4 text-base font-bold text-white uppercase tracking-wider">
+              Equipment Categories
             </h3>
-
-            <div className="space-y-4 text-slate-300">
-
-              <p>Diagnostic Equipment</p>
-
-              <p>Laboratory Solutions</p>
-
-              <p>Biomedical Instruments</p>
-
-              <p>Maintenance & AMC</p>
-
+            <div className="flex flex-col gap-2.5 text-sm text-slate-300">
+              <p className="hover:text-cyan-400 cursor-pointer transition">Biochemistry Analyzers</p>
+              <p className="hover:text-cyan-400 cursor-pointer transition">Electrolyte Testing Systems</p>
+              <p className="hover:text-cyan-400 cursor-pointer transition">Hematology 5-Part Counsel</p>
+              <p className="hover:text-cyan-400 cursor-pointer transition">Rapid Diagnostic Kits</p>
+              <p className="hover:text-cyan-400 cursor-pointer transition">AMC & Technician Support</p>
             </div>
-
           </div>
 
-          {/* Contact */}
-
+          {/* Col 4: Contact Info */}
           <div>
-
-            <h3 className="mb-6 text-xl font-bold text-slate-300">
-
-              Contact Info
-
+            <h3 className="mb-4 text-base font-bold text-white uppercase tracking-wider">
+              Corporate Office
             </h3>
-
-            <div className="space-y-6">
-
-              <div className="flex gap-4">
-
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#slate-200]/15 text-slate-300">
-
-                  <MapPin size={18} />
-
-                </div>
-
-                <p className="leading-7 text-slate-300">
-
-                  {dynamicAddress}
-
-                </p>
-
+            <div className="space-y-4 text-sm text-slate-300">
+              <div className="flex items-start gap-3">
+                <MapPin size={18} className="text-amber-400 flex-shrink-0 mt-0.5" />
+                <span>{dynamicAddress}</span>
               </div>
 
-              <div className="flex items-center gap-4">
-
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#slate-200]/15 text-slate-300">
-
-                  <Phone size={18} />
-
-                </div>
-
-                <p className="text-slate-300">
-
+              <div className="flex items-center gap-3">
+                <Phone size={18} className="text-teal-400 flex-shrink-0" />
+                <a href={`tel:${phone.replace(/\s+/g, "")}`} className="hover:text-white transition">
                   {phone}
-
-                </p>
-
+                </a>
               </div>
 
-              <div className="flex items-center gap-4">
-
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#slate-200]/15 text-slate-300">
-
-                  <Mail size={18} />
-
-                </div>
-
-                <p className="text-slate-300 break-all">
-
+              <div className="flex items-center gap-3">
+                <Mail size={18} className="text-cyan-400 flex-shrink-0" />
+                <a href={`mailto:${email}`} className="hover:text-white transition break-all">
                   {email}
-
-                </p>
-
+                </a>
               </div>
-
             </div>
-
           </div>
-
         </div>
 
-        {/* Bottom */}
-
-        <div className="mt-16 flex flex-col items-center justify-between gap-5 border-t border-slate-500/20 pt-8 text-sm text-slate-500 md:flex-row">
-
-          <p>
-
-            © 2026 Central Biomedicals. All Rights Reserved.
-
+        {/* Footer Bottom Line */}
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-6 text-xs text-slate-400 md:flex-row">
+          <p>© {new Date().getFullYear()} Central Biomedicals. All Rights Reserved.</p>
+          <p className="flex items-center gap-1">
+            Engineered with Healthcare Precision & Modern UI.
           </p>
-
-          <p>
-
-            Designed with Precision for Modern Healthcare.
-
-          </p>
-
         </div>
-
       </div>
-
     </footer>
   );
 }

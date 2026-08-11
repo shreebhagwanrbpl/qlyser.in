@@ -6,45 +6,36 @@ export default function SectionTitle({
 }) {
   return (
     <div
-      className={`${center ? "mx-auto text-center" : ""
-        } relative max-w-4xl`}
+      className={`${
+        center ? "mx-auto text-center" : ""
+      } relative max-w-4xl`}
     >
-
       {/* Badge */}
-
       {badge && (
-        <div className="inline-flex items-center gap-2 rounded-full border border-[#94A3B8]/25 bg-[#F8FAFC] px-5 py-2 text-sm font-semibold text-[#64748B] shadow-md shadow-yellow-200/30">
-
-          <span className="h-2 w-2 rounded-full bg-[#94A3B8]" />
-
+        <div className="inline-flex items-center gap-2 rounded-full border border-slate-300 bg-slate-100/80 px-5 py-2 text-sm font-bold text-slate-800 shadow-sm">
+          <span className="h-2 w-2 rounded-full bg-teal-500 animate-pulse" />
           {badge}
-
         </div>
       )}
 
       {/* Title */}
-
-      <h2 className="mt-6 text-4xl font-black leading-tight text-[#1E293B] md:text-5xl lg:text-6xl">
-
+      <h2 className="mt-5 text-3xl sm:text-4xl lg:text-5xl font-black leading-[1.18] text-slate-900 tracking-tight">
         {title}
-
       </h2>
 
       {/* Divider */}
-
       <div
-        className={`mt-6 h-1 w-24 rounded-full bg-gradient-to-r from-[#64748B] via-[#CBD5E1] to-[#64748B] ${center ? "mx-auto" : ""
-          }`}
+        className={`mt-5 h-1.5 w-24 rounded-full bg-gradient-to-r from-blue-600 via-teal-500 to-cyan-500 ${
+          center ? "mx-auto" : ""
+        }`}
       />
 
       {/* Description */}
-
-      <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-600">
-
-        {description}
-
-      </p>
-
+      {description && (
+        <p className="mt-5 max-w-2xl text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
+          {description}
+        </p>
+      )}
     </div>
   );
 }
