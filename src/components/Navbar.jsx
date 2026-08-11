@@ -58,13 +58,13 @@ export default function Navbar() {
 
             <span className="text-[#64748B]">
 
-              Central
+              Raj
 
             </span>
 
             <span className="text-[#1E293B]">
 
-              {" "}Biomedicals
+              {" "}Biosis
 
             </span>
 

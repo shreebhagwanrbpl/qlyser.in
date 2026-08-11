@@ -22,9 +22,34 @@ import {
 } from "lucide-react";
 
 export default function HeroSection({ city }) {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const [dbHero, setDbHero] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const [heroData, setHeroData] = useState({
+    title: "",
+    description: "",
+    button1Text: "",
+    button2Text: "",
+  });
+
+  useEffect(() => {
+    const fetchHeroData = async () => {
+      try {
+        const snap = await getDoc(
+          doc(db, "websites", "qlyserin", "pages", "home")
+        );
+
+        if (snap.exists()) {
+          setHeroData(snap.data());
+        }
+      } catch (error) {
+        console.error("Error fetching hero data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchHeroData();
+  }, []);
 
   // District Routing
   const districtSlug = city

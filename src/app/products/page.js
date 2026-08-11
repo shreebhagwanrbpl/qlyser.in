@@ -10,6 +10,7 @@ import {
   BadgeCheck,
   PackageCheck,
   ChevronDown,
+  Search,
   ChevronRight,
 } from "lucide-react";
 

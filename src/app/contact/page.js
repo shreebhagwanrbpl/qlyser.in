@@ -78,7 +78,7 @@ export default function ContactPage() {
         collection(
           db,
           "websitesQueries",
-          "centralbiomedicals",
+          "qlyserin",
           "contactQueries"
         ),
         {
@@ -112,7 +112,7 @@ export default function ContactPage() {
           doc(
             db,
             "websites",
-            "centralbiomedicals",
+            "qlyserin",
             "districts",
             currentDistrict
           )
@@ -135,7 +135,7 @@ export default function ContactPage() {
           doc(
             db,
             "websites",
-            "centralbiomedicals",
+            "qlyserin",
             "pages",
             "contact"
           )
@@ -185,8 +185,8 @@ export default function ContactPage() {
     <>
       {/* Banner */}
       <PageBanner
-        title="Contact Central Biomedicals"
-        subtitle="Get in touch with our expert biomedical engineers for sales quotes, pathology reagent orders, and 24/7 AMC technical support."
+        title="Contact Us"
+        subtitle="Get in touch with Raj Biosiss for premium diagnostic and biomedical solutions."
       />
 
       {/* Main Contact Section */}

@@ -52,8 +52,8 @@ export default function AboutPage() {
     <>
       {/* Page Banner */}
       <PageBanner
-        title="About Central Biomedicals"
-        subtitle="Empowering healthcare institutions, pathology laboratories, and diagnostic centers with world-class biomedical systems and dedicated service support."
+        title="About Raj Biosiss"
+        subtitle="Delivering trusted diagnostic and biomedical technologies with innovation, quality, and healthcare precision."
       />
 
       {/* Main About Story Section */}
@@ -99,8 +99,14 @@ export default function AboutPage() {
               description="Central Biomedicals is a premier provider of automated biochemistry analyzers, hematology instruments, electrolyte testing systems, and high-purity clinical reagents."
             />
 
-            <p className="mt-6 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
-              For over a decade, we have partnered with hospitals, diagnostic labs, and medical centers across India to supply state-of-the-art diagnostic machinery. Our focus is delivering reliable equipment backed by quick technical response and preventive maintenance.
+            <p className="mt-8 text-lg leading-9 text-slate-600">
+
+              At Raj Biosiss, we are committed to delivering
+              premium-quality healthcare and biomedical technologies
+              designed to improve diagnostics, laboratory performance
+              and medical efficiency for hospitals, pathology labs and
+              research institutions.
+
             </p>
 
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">

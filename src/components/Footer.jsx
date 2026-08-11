@@ -32,7 +32,13 @@ export default function Footer() {
     const loadContact = async () => {
       try {
         const snap = await getDoc(
-          doc(db, "websites", "centralbiomedicals", "pages", "contact")
+          doc(
+            db,
+            "websites",
+            "qlyserin",
+            "pages",
+            "contact"
+          )
         );
         if (snap.exists()) {
           setContactInfo(snap.data().contactInfo || []);
@@ -51,7 +57,13 @@ export default function Footer() {
       if (!district) return;
       try {
         const snap = await getDoc(
-          doc(db, "websites", "centralbiomedicals", "districts", district)
+          doc(
+            db,
+            "websites",
+            "qlyserin",
+            "districts",
+            district
+          )
         );
         if (snap.exists()) {
           setDistrictData(snap.data());
@@ -92,9 +104,18 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Col 1: Brand & Tagline */}
           <div>
-            <h2 className="text-2xl font-black tracking-tight">
-              <span className="text-cyan-400">Central</span>{" "}
-              <span className="text-white">Biomedicals</span>
+
+            <h2 className="text-3xl font-black">
+
+              <span className="text-slate-300">
+                Raj
+              </span>
+
+              <span className="text-white">
+                {" "}Biosis
+              </span>
+
+
             </h2>
 
             <p className="mt-4 text-sm leading-relaxed text-slate-300">
@@ -173,11 +194,14 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Footer Bottom Line */}
-        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-6 text-xs text-slate-400 md:flex-row">
-          <p>© {new Date().getFullYear()} Central Biomedicals. All Rights Reserved.</p>
-          <p className="flex items-center gap-1">
-            Engineered with Healthcare Precision & Modern UI.
+        {/* Bottom */}
+
+        <div className="mt-16 flex flex-col items-center justify-between gap-5 border-t border-slate-500/20 pt-8 text-sm text-slate-500 md:flex-row">
+
+          <p>
+
+            © 2026 Raj Biosiss. All Rights Reserved.
+
           </p>
         </div>
       </div>
