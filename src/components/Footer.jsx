@@ -45,7 +45,7 @@ export default function Footer() {
           doc(
             db,
             "websites",
-            "haemoglobinstripcom",
+            "qlyserin",
             "pages",
             "contact"
           )
@@ -76,7 +76,7 @@ export default function Footer() {
           doc(
             db,
             "websites",
-            "haemoglobinstripcom",
+            "qlyserin",
             "districts",
             district
           )

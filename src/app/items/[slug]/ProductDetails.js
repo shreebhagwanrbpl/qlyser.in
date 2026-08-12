@@ -96,7 +96,7 @@ export default function ProductDetails({ slug }) {
         const loadContact = async () => {
             try {
                 const snap = await getDoc(
-                    doc(db, "websites", "bloodmixerin", "pages", "contact")
+                    doc(db, "websites", "qlyserin", "pages", "contact")
                 );
                 if (snap.exists()) {
                     const info = snap.data().contactInfo || [];
@@ -231,7 +231,7 @@ export default function ProductDetails({ slug }) {
                 collection(
                     db,
                     "websitesQueries",
-                    "bloodmixerin",
+                    "qlyserin",
                     "productQueries"
                 ),
                 {
@@ -453,7 +453,7 @@ ${product?.desc}
                             md:rounded-[36px]
                             overflow-hidden
                             bg-white
-                          border border-[#135DFB]
+                          border border-[#0069A8]
                             shadow-[0_25px_80px_rgba(123,30,58,0.12)]
                             ">
 
@@ -540,8 +540,8 @@ ${product?.desc}
 
         ${selectedMedia === "image" &&
                                             selectedImage === img
-                                            ? "border-[#135DFB] shadow-[0_5px_15px_rgba(123,30,58,0.25)]"
-                                            : "border-[#135DFB] hover:border-[#135DFB]"
+                                            ? "border-[#0069A8] shadow-[0_5px_15px_rgba(123,30,58,0.25)]"
+                                            : "border-[#0069A8] hover:border-[#0069A8]"
                                         }
       `}
                                 >
@@ -585,8 +585,8 @@ ${product?.desc}
         transition-all
 
         ${selectedMedia === "video"
-                                            ? "border-[#135DFB] bg-[#FFF5F7] text-[#135DFB]"
-                                            : "border-[#135DFB] hover:bg-[#FFF5F7]"
+                                            ? "border-[#0069A8] bg-[#FFF5F7] text-[#0069A8]"
+                                            : "border-[#0069A8] hover:bg-[#FFF5F7]"
                                         }
       `}
                                 >
@@ -622,12 +622,12 @@ ${product?.desc}
         h-20 
         rounded-xl 
         border 
-        border-[#135DFB]
+        border-[#0069A8]
         flex 
         flex-col 
         items-center 
         justify-center
-        text-[#135DFB]
+        text-[#0069A8]
         hover:bg-[#FFF5F7]
         transition-all
       "
@@ -665,7 +665,7 @@ ${product?.desc}
     lg:text-5xl 
     font-bold 
     leading-tight 
-    text-[#135DFB]
+    text-[#0069A8]
   ">
                                 {product.title}
                             </h1>
@@ -687,9 +687,9 @@ ${product?.desc}
         h-12 
         rounded-full 
         border 
-        border-[#135DFB]
+        border-[#0069A8]
         bg-white 
-        text-[#135DFB]
+        text-[#0069A8]
         shadow-md
         flex 
         items-center 
@@ -719,7 +719,7 @@ ${product?.desc}
         rounded-xl 
         shadow-[0_20px_50px_rgba(123,30,58,0.15)]
         border 
-        border-[#135DFB]
+        border-[#0069A8]
         p-2 
         z-50
       ">
@@ -739,7 +739,7 @@ ${product?.desc}
             gap-2
             text-[#6B4A54]
             hover:bg-[#FFF5F7]
-            hover:text-[#135DFB]
+            hover:text-[#0069A8]
             transition
           "
                                         >
@@ -767,7 +767,7 @@ ${product?.desc}
             gap-2
             text-[#6B4A54]
             hover:bg-[#FFF5F7]
-            hover:text-[#135DFB]
+            hover:text-[#0069A8]
             transition
           "
                                         >
@@ -795,7 +795,7 @@ ${product?.desc}
             gap-2
             text-[#6B4A54]
             hover:bg-[#FFF5F7]
-            hover:text-[#135DFB]
+            hover:text-[#0069A8]
             transition
           "
                                         >
@@ -823,7 +823,7 @@ ${product?.desc}
             gap-2
             text-[#6B4A54]
             hover:bg-[#FFF5F7]
-            hover:text-[#135DFB]
+            hover:text-[#0069A8]
             transition
           "
                                         >
@@ -854,14 +854,14 @@ ${product?.desc}
   md:p-8 
   rounded-[24px] 
   md:rounded-[30px]
-border border-[#135DFB]
+border border-[#0069A8]
   shadow-[0_20px_60px_rgba(123,30,58,0.10)]
   space-y-4
 ">
 
 
                             <p className="text-[#6B4A54]">
-                                <b className="text-[#135DFB]">
+                                <b className="text-[#0069A8]">
                                     Brand:
                                 </b>{" "}
                                 {product.brand || "N/A"}
@@ -869,7 +869,7 @@ border border-[#135DFB]
 
 
                             <p className="text-[#6B4A54]">
-                                <b className="text-[#135DFB]">
+                                <b className="text-[#0069A8]">
                                     Model:
                                 </b>{" "}
                                 {product.model || "N/A"}
@@ -877,7 +877,7 @@ border border-[#135DFB]
 
 
                             <p className="text-[#6B4A54]">
-                                <b className="text-[#135DFB]">
+                                <b className="text-[#0069A8]">
                                     Instrument:
                                 </b>{" "}
                                 {product.instrument || "N/A"}
@@ -885,7 +885,7 @@ border border-[#135DFB]
 
 
                             <p className="text-[#6B4A54]">
-                                <b className="text-[#135DFB]">
+                                <b className="text-[#0069A8]">
                                     Capacity:
                                 </b>{" "}
                                 {product.capacity || "N/A"}
@@ -893,7 +893,7 @@ border border-[#135DFB]
 
 
                             <p className="text-[#6B4A54]">
-                                <b className="text-[#135DFB]">
+                                <b className="text-[#0069A8]">
                                     Throughput:
                                 </b>{" "}
                                 {product.throughput || "N/A"}
@@ -901,7 +901,7 @@ border border-[#135DFB]
 
 
                             <p className="text-[#6B4A54]">
-                                <b className="text-[#135DFB]">
+                                <b className="text-[#0069A8]">
                                     Usage:
                                 </b>{" "}
                                 {product.usage || "N/A"}
@@ -909,7 +909,7 @@ border border-[#135DFB]
 
 
                             <p className="text-[#6B4A54]">
-                                <b className="text-[#135DFB]">
+                                <b className="text-[#0069A8]">
                                     Automation:
                                 </b>{" "}
                                 {product.automation || "N/A"}
@@ -917,7 +917,7 @@ border border-[#135DFB]
 
 
                             <p className="text-[#6B4A54]">
-                                <b className="text-[#135DFB]">
+                                <b className="text-[#0069A8]">
                                     Availability:
                                 </b>{" "}
                                 {product.availability || "N/A"}
@@ -944,7 +944,7 @@ border border-[#135DFB]
   p-5 
   sm:p-6 
   md:p-8
-  border border-[#135DFB]
+  border border-[#0069A8]
   shadow-[0_20px_60px_rgba(123,30,58,0.10)]
   h-fit 
   lg:sticky 
@@ -952,17 +952,17 @@ border border-[#135DFB]
 ">
 
 
-                            <h2 className="text-2xl md:text-3xl font-bold mb-2 text-[#135DFB]">
+                            <h2 className="text-2xl md:text-3xl font-bold mb-2 text-[#0069A8]">
                                 Request A Quote
                             </h2>
 
 
 
-                            <p className="text-[#135DFB] mb-8">
+                            <p className="text-[#0069A8] mb-8">
 
                                 Product:
 
-                                <span className="font-semibold ml-2 text-[#135DFB]">
+                                <span className="font-semibold ml-2 text-[#0069A8]">
                                     {product.title}
                                 </span>
 
@@ -991,19 +991,19 @@ border border-[#135DFB]
                                     className="
         w-full
         bg-[#FFF8F9]
-        border border-[#135DFB]
+        border border-[#0069A8]
         rounded-xl
         md:rounded-2xl
         px-4
         md:px-5
         py-3
         md:py-4
-        text-[#135DFB]
-        placeholder:text-[#135DFB]
+        text-[#0069A8]
+        placeholder:text-[#0069A8]
         outline-none
-        focus:border-[#135DFB]
+        focus:border-[#0069A8]
         focus:ring-2
-        focus:ring-[#135DFB]/20
+        focus:ring-[#0069A8]/20
         transition
       "
                                 />
@@ -1025,19 +1025,19 @@ border border-[#135DFB]
                                     className="
         w-full
         bg-[#FFF8F9]
-        border border-[#135DFB]
+        border border-[#0069A8]
         rounded-xl
         md:rounded-2xl
         px-4
         md:px-5
         py-3
         md:py-4
-        text-[#135DFB]
-        placeholder:text-[#135DFB]
+        text-[#0069A8]
+        placeholder:text-[#0069A8]
         outline-none
-        focus:border-[#135DFB]
+        focus:border-[#0069A8]
         focus:ring-2
-        focus:ring-[#135DFB]/20
+        focus:ring-[#0069A8]/20
         transition
       "
                                 />
@@ -1064,16 +1064,16 @@ border border-[#135DFB]
                                     className="
         w-full
         bg-[#FFF8F9]
-        border border-[#135DFB]
+        border border-[#0069A8]
         rounded-2xl
         px-5
         py-4
-        text-[#135DFB]
-        placeholder:text-[#135DFB]
+        text-[#0069A8]
+        placeholder:text-[#0069A8]
         outline-none
-        focus:border-[#135DFB]
+        focus:border-[#0069A8]
         focus:ring-2
-        focus:ring-[#135DFB]/20
+        focus:ring-[#0069A8]/20
         transition
       "
                                 />
@@ -1088,15 +1088,15 @@ border border-[#135DFB]
                                     className="
         w-full
         bg-gradient-to-r
-        from-[#135DFB]
-        to-[#135DFB]
+        from-[#0069A8]
+        to-[#0069A8]
         text-white
         py-4
         rounded-2xl
         font-semibold
         shadow-md
-        hover:from-[#135DFB]
-        hover:to-[#135DFB]
+        hover:from-[#0069A8]
+        hover:to-[#0069A8]
         transition-all
         duration-300
         disabled:opacity-70
@@ -1125,13 +1125,13 @@ border border-[#135DFB]
   p-5 
   sm:p-6 
   md:p-10
-border border-[#135DFB]
+border border-[#0069A8]
   shadow-[0_20px_60px_rgba(123,30,58,0.10)]
 ">
 
 
                             {/* Description Title */}
-                            <h3 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-[#135DFB]">
+                            <h3 className="text-2xl md:text-3xl font-bold mb-4 md:mb-6 text-[#0069A8]">
                                 Product Description
                             </h3>
 
@@ -1154,7 +1154,7 @@ border border-[#135DFB]
                             {/* Specifications Table */}
                             <div className="mt-10 overflow-x-auto">
 
-                                <table className="w-full border border-[#135DFB]">
+                                <table className="w-full border border-[#0069A8]">
 
 
                                     <tbody>
@@ -1174,10 +1174,10 @@ border border-[#135DFB]
 
                                                 <td className="
               border 
-              border-[#135DFB]
+              border-[#0069A8]
               p-3
               font-semibold
-              text-[#135DFB]
+              text-[#0069A8]
               bg-[#FFF8F9]
             ">
                                                     {label}
@@ -1186,7 +1186,7 @@ border border-[#135DFB]
 
                                                 <td className="
               border 
-              border-[#135DFB]
+              border-[#0069A8]
               p-3
               text-[#6B4A54]
             ">
@@ -1215,7 +1215,7 @@ border border-[#135DFB]
                             <div className="mt-12">
 
 
-                                <h3 className="text-2xl font-bold mb-4 text-[#135DFB]">
+                                <h3 className="text-2xl font-bold mb-4 text-[#0069A8]">
                                     Why Choose Raj Biosis in {cityName}?
                                 </h3>
 
@@ -1236,7 +1236,7 @@ border border-[#135DFB]
                                 <div className="mt-8">
 
 
-                                    <h3 className="text-2xl font-bold mb-4 text-[#135DFB]">
+                                    <h3 className="text-2xl font-bold mb-4 text-[#0069A8]">
                                         Features of {product.title}
                                     </h3>
 
@@ -1259,7 +1259,7 @@ border border-[#135DFB]
                                 <div className="mt-8">
 
 
-                                    <h3 className="text-2xl font-bold mb-4 text-[#135DFB]">
+                                    <h3 className="text-2xl font-bold mb-4 text-[#0069A8]">
                                         Applications of {product.title}
                                     </h3>
 
@@ -1278,7 +1278,7 @@ border border-[#135DFB]
                                 <div className="mt-8">
 
 
-                                    <h3 className="text-2xl font-bold mb-4 text-[#135DFB]">
+                                    <h3 className="text-2xl font-bold mb-4 text-[#0069A8]">
                                         {product.title} Supplier in {cityName}
                                     </h3>
 
@@ -1299,7 +1299,7 @@ border border-[#135DFB]
                                 <div className="mt-8">
 
 
-                                    <h3 className="text-2xl font-bold mb-4 text-[#135DFB]">
+                                    <h3 className="text-2xl font-bold mb-4 text-[#0069A8]">
                                         {product.title} Dealer in {cityName}
                                     </h3>
 
@@ -1322,7 +1322,7 @@ border border-[#135DFB]
                                 <div className="mt-8">
 
 
-                                    <h3 className="text-2xl font-bold mb-4 text-[#135DFB]">
+                                    <h3 className="text-2xl font-bold mb-4 text-[#0069A8]">
                                         {product.title} Distributor in {cityName}
                                     </h3>
 
@@ -1344,7 +1344,7 @@ border border-[#135DFB]
                                 <div className="mt-8">
 
 
-                                    <h3 className="text-2xl font-bold mb-4 text-[#135DFB]">
+                                    <h3 className="text-2xl font-bold mb-4 text-[#0069A8]">
                                         Buy {product.title} in {cityName}
                                     </h3>
 
@@ -1366,7 +1366,7 @@ border border-[#135DFB]
                                 <div className="mt-8">
 
 
-                                    <h3 className="text-2xl font-bold mb-4 text-[#135DFB]">
+                                    <h3 className="text-2xl font-bold mb-4 text-[#0069A8]">
                                         {product.title} Price in {cityName}
                                     </h3>
 
@@ -1387,7 +1387,7 @@ border border-[#135DFB]
                             <div className="mt-12">
 
 
-                                <h3 className="text-2xl font-bold mb-6 text-[#135DFB]">
+                                <h3 className="text-2xl font-bold mb-6 text-[#0069A8]">
                                     Frequently Asked Questions
                                 </h3>
 
@@ -1398,7 +1398,7 @@ border border-[#135DFB]
 
 
                                     <div>
-                                        <h4 className="font-semibold text-lg text-[#135DFB]">
+                                        <h4 className="font-semibold text-lg text-[#0069A8]">
                                             What is {product.title} used for in {cityName}?
                                         </h4>
 
@@ -1413,7 +1413,7 @@ border border-[#135DFB]
 
 
                                     <div>
-                                        <h4 className="font-semibold text-lg text-[#135DFB]">
+                                        <h4 className="font-semibold text-lg text-[#0069A8]">
                                             What is the price of {product.title} in {cityName}?
                                         </h4>
 
@@ -1428,7 +1428,7 @@ border border-[#135DFB]
 
 
                                     <div>
-                                        <h4 className="font-semibold text-lg text-[#135DFB]">
+                                        <h4 className="font-semibold text-lg text-[#0069A8]">
                                             Are you an authorized supplier of {product.title}?
                                         </h4>
 
@@ -1443,7 +1443,7 @@ border border-[#135DFB]
 
 
                                     <div>
-                                        <h4 className="font-semibold text-lg text-[#135DFB]">
+                                        <h4 className="font-semibold text-lg text-[#0069A8]">
                                             Can hospitals in {cityName} order this product?
                                         </h4>
 
@@ -1459,7 +1459,7 @@ border border-[#135DFB]
 
 
                                     <div>
-                                        <h4 className="font-semibold text-lg text-[#135DFB]">
+                                        <h4 className="font-semibold text-lg text-[#0069A8]">
                                             Do you provide installation support?
                                         </h4>
 
@@ -1474,7 +1474,7 @@ border border-[#135DFB]
 
 
                                     <div>
-                                        <h4 className="font-semibold text-lg text-[#135DFB]">
+                                        <h4 className="font-semibold text-lg text-[#0069A8]">
                                             Can I request a quotation?
                                         </h4>
 
@@ -1490,7 +1490,7 @@ border border-[#135DFB]
 
 
                                     <div>
-                                        <h4 className="font-semibold text-lg text-[#135DFB]">
+                                        <h4 className="font-semibold text-lg text-[#0069A8]">
                                             Do you provide warranty?
                                         </h4>
 
@@ -1505,7 +1505,7 @@ border border-[#135DFB]
 
 
                                     <div>
-                                        <h4 className="font-semibold text-lg text-[#135DFB]">
+                                        <h4 className="font-semibold text-lg text-[#0069A8]">
                                             Do you deliver across India?
                                         </h4>
 
@@ -1520,7 +1520,7 @@ border border-[#135DFB]
 
 
                                     <div>
-                                        <h4 className="font-semibold text-lg text-[#135DFB]">
+                                        <h4 className="font-semibold text-lg text-[#0069A8]">
                                             How can I contact Raj Biosis?
                                         </h4>
 
@@ -1554,7 +1554,7 @@ border border-[#135DFB]
                     width: "800px",
                     padding: "40px",
                     fontFamily: "system-ui, -apple-system, sans-serif",
-                    color: "#135DFB",
+                    color: "#0069A8",
                     background: "#ffffff",
                     boxSizing: "border-box",
                 }}
@@ -1564,7 +1564,7 @@ border border-[#135DFB]
                     display: "flex",
                     justifyContent: "space-between",
                     alignItems: "center",
-                    borderBottom: "3px solid #135DFB",
+                    borderBottom: "3px solid #0069A8",
                     paddingBottom: "20px",
                     marginBottom: "30px"
                 }}>
@@ -1572,8 +1572,8 @@ border border-[#135DFB]
                     <div style={{ display: "flex", alignItems: "center", gap: "15px" }}>
                         <img src="/logo.png" style={{ height: "65px", width: "auto", objectFit: "contain" }} />
                         <div>
-                            <h1 style={{ margin: "0", fontSize: "28px", color: "#135DFB", fontWeight: "800", letterSpacing: "-0.5px" }}>
-                                Raj Biosis
+                            <h1 style={{ margin: "0", fontSize: "28px", color: "#0069A8", fontWeight: "800", letterSpacing: "-0.5px" }}>
+                                Raj Biosis Private Limited 
                             </h1>
                             <p style={{ margin: "2px 0 0 0", fontSize: "12px", color: "#6B4A54", fontWeight: "600", textTransform: "uppercase", letterSpacing: "1px" }}>
                                 Trusted Biomedical Systems
@@ -1582,7 +1582,7 @@ border border-[#135DFB]
                     </div>
                     {/* Contact Details */}
                     <div style={{ textAlign: "right", fontSize: "12px", lineHeight: "1.6", color: "#6B4A54" }}>
-                        <p style={{ margin: "0", fontWeight: "700", color: "#135DFB", fontSize: "14px" }}>www.bloodmixer.in</p>
+                        <p style={{ margin: "0", fontWeight: "700", color: "#0069A8", fontSize: "14px" }}>www.qlyser.in</p>
                         <p style={{ margin: "0" }}>Email: {contactData.email}</p>
                         <div style={{ margin: "0" }}>
                             {contactData.phone.split(/[\n,]+/).map((num, i) => (
@@ -1593,7 +1593,7 @@ border border-[#135DFB]
                 </div>
 
                 {/* Product Title */}
-                <h2 style={{ fontSize: "26px", color: "#135DFB", margin: "0 0 25px 0", textAlign: "center", fontWeight: "800", textTransform: "uppercase" }}>
+                <h2 style={{ fontSize: "26px", color: "#0069A8", margin: "0 0 25px 0", textAlign: "center", fontWeight: "800", textTransform: "uppercase" }}>
                     {product.title}
                 </h2>
 
@@ -1602,7 +1602,7 @@ border border-[#135DFB]
                     {/* Left Column: Image */}
                     <div style={{
                         flex: "1.2",
-                        border: "1px solid #135DFB",
+                        border: "1px solid #0069A8",
                         borderRadius: "16px",
                         padding: "20px",
                         display: "flex",
@@ -1619,51 +1619,51 @@ border border-[#135DFB]
 
                     {/* Right Column: Specs */}
                     <div style={{ flex: "1", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-                        <div style={{ backgroundColor: "#FFF8F9", border: "1px solid #135DFB", borderRadius: "16px", padding: "20px", height: "100%", boxSizing: "border-box" }}>
-                            <h3 style={{ margin: "0 0 15px 0", color: "#135DFB", fontSize: "18px", fontWeight: "700", borderBottom: "1px solid #135DFB", paddingBottom: "8px" }}>
+                        <div style={{ backgroundColor: "#FFF8F9", border: "1px solid #0069A8", borderRadius: "16px", padding: "20px", height: "100%", boxSizing: "border-box" }}>
+                            <h3 style={{ margin: "0 0 15px 0", color: "#0069A8", fontSize: "18px", fontWeight: "700", borderBottom: "1px solid #0069A8", paddingBottom: "8px" }}>
                                 Specifications
                             </h3>
                             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                                 <p style={{ margin: "0", fontSize: "14px", color: "#6B4A54" }}>
-                                    <strong style={{ color: "#135DFB" }}>Brand:</strong> {product.brand || "Raj Biosis"}
+                                    <strong style={{ color: "#0069A8" }}>Brand:</strong> {product.brand || "Raj Biosis"}
                                 </p>
                                 <p style={{ margin: "0", fontSize: "14px", color: "#6B4A54" }}>
-                                    <strong style={{ color: "#135DFB" }}>Model:</strong> {product.model || "N/A"}
+                                    <strong style={{ color: "#0069A8" }}>Model:</strong> {product.model || "N/A"}
                                 </p>
                                 {product.instrument && (
                                     <p style={{ margin: "0", fontSize: "14px", color: "#6B4A54" }}>
-                                        <strong style={{ color: "#135DFB" }}>Instrument:</strong> {product.instrument}
+                                        <strong style={{ color: "#0069A8" }}>Instrument:</strong> {product.instrument}
                                     </p>
                                 )}
                                 {product.category && (
                                     <p style={{ margin: "0", fontSize: "14px", color: "#6B4A54" }}>
-                                        <strong style={{ color: "#135DFB" }}>Category:</strong> {product.category}
+                                        <strong style={{ color: "#0069A8" }}>Category:</strong> {product.category}
                                     </p>
                                 )}
                                 {product.subCategory && (
                                     <p style={{ margin: "0", fontSize: "14px", color: "#6B4A54" }}>
-                                        <strong style={{ color: "#135DFB" }}>Subcategory:</strong> {product.subCategory}
+                                        <strong style={{ color: "#0069A8" }}>Subcategory:</strong> {product.subCategory}
                                     </p>
                                 )}
                                 {product.throughput && (
                                     <p style={{ margin: "0", fontSize: "14px", color: "#6B4A54" }}>
-                                        <strong style={{ color: "#135DFB" }}>Throughput:</strong> {product.throughput}
+                                        <strong style={{ color: "#0069A8" }}>Throughput:</strong> {product.throughput}
                                     </p>
                                 )}
                                 {product.usage && (
                                     <p style={{ margin: "0", fontSize: "14px", color: "#6B4A54" }}>
-                                        <strong style={{ color: "#135DFB" }}>Usage:</strong> {product.usage}
+                                        <strong style={{ color: "#0069A8" }}>Usage:</strong> {product.usage}
                                     </p>
                                 )}
 
                                 {product.automation && (
                                     <p style={{ margin: "0", fontSize: "14px", color: "#6B4A54" }}>
-                                        <strong style={{ color: "#135DFB" }}>Automation:</strong> {product.automation}
+                                        <strong style={{ color: "#0069A8" }}>Automation:</strong> {product.automation}
                                     </p>
                                 )}
                                 {product.availability && (
                                     <p style={{ margin: "0", fontSize: "14px", color: "#6B4A54" }}>
-                                        <strong style={{ color: "#135DFB" }}>Availability:</strong> {product.availability}
+                                        <strong style={{ color: "#0069A8" }}>Availability:</strong> {product.availability}
                                     </p>
                                 )}
                             </div>
@@ -1673,7 +1673,7 @@ border border-[#135DFB]
 
                 {/* Description */}
                 <div style={{ marginBottom: "35px" }}>
-                    <h3 style={{ color: "#135DFB", fontSize: "18px", fontWeight: "700", borderLeft: "4px solid #135DFB", paddingLeft: "10px", margin: "0 0 12px 0" }}>
+                    <h3 style={{ color: "#0069A8", fontSize: "18px", fontWeight: "700", borderLeft: "4px solid #0069A8", paddingLeft: "10px", margin: "0 0 12px 0" }}>
                         Product Overview
                     </h3>
                     <p style={{ fontSize: "14px", lineHeight: "1.6", color: "#6B4A54", margin: "0", textAlign: "justify" }}>
@@ -1684,7 +1684,7 @@ border border-[#135DFB]
                 {/* Footer Details */}
                 <div style={{
                     marginTop: "auto",
-                    borderTop: "1px solid #135DFB",
+                    borderTop: "1px solid #0069A8",
                     paddingTop: "20px",
                     textAlign: "center",
                     fontSize: "11px",
@@ -1701,7 +1701,7 @@ border border-[#135DFB]
                 onClick={handleDownloadBrochure}
                 disabled={downloading}
                 title="Download Brochure"
-                className="fixed bottom-24 right-8 z-40 flex h-14 items-center justify-center gap-2 rounded-full bg-[#135DFB] px-6 text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-[#135DFB] hover:shadow-xl active:scale-95 disabled:opacity-75 font-semibold"
+                className="fixed bottom-24 right-8 z-40 flex h-14 items-center justify-center gap-2 rounded-full bg-[#0069A8] px-6 text-white shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-[#0069A8] hover:shadow-xl active:scale-95 disabled:opacity-75 font-semibold"
             >
                 {downloading ? (
                     <div className="h-5 w-5 animate-spin rounded-full border-2 border-white border-t-transparent" />
