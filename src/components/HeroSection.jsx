@@ -22,34 +22,9 @@ import {
 } from "lucide-react";
 
 export default function HeroSection({ city }) {
-  const [loading, setLoading] = useState(true);
-
-  const [heroData, setHeroData] = useState({
-    title: "",
-    description: "",
-    button1Text: "",
-    button2Text: "",
-  });
-
-  useEffect(() => {
-    const fetchHeroData = async () => {
-      try {
-        const snap = await getDoc(
-          doc(db, "websites", "qlyserin", "pages", "home")
-        );
-
-        if (snap.exists()) {
-          setHeroData(snap.data());
-        }
-      } catch (error) {
-        console.error("Error fetching hero data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchHeroData();
-  }, []);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [dbHero, setDbHero] = useState(null);
 
   // District Routing
   const districtSlug = city
@@ -279,7 +254,7 @@ export default function HeroSection({ city }) {
                     {slide.visualIcon}
                   </div>
                   <p className="relative z-10 mt-3 text-xs font-semibold tracking-wider text-slate-400 uppercase">
-                    Central Biomedicals
+                    Raj Biosis Private Limited
                   </p>
                 </div>
 

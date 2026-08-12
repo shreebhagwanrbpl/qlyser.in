@@ -1,6 +1,5 @@
 import HeroSection from "@/components/HeroSection";
 import FeaturedProducts from "@/components/FeaturedProducts";
-import TrustedBrands from "@/components/TrustedBrands";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import StatsSection from "@/components/StatsSection";
 import ServicesPreview from "@/components/ServicesPreview";
@@ -13,7 +12,6 @@ export default function Home({ city = "" }) {
     <>
       <HeroSection city={city} />
       <FeaturedProducts city={city} />
-      <TrustedBrands city={city} />
       <WhyChooseUs city={city} />
       <StatsSection city={city} />
       <ServicesPreview city={city} />

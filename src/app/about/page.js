@@ -3,39 +3,38 @@ import Link from "next/link";
 import PageBanner from "@/components/PageBanner";
 import SectionTitle from "@/components/SectionTitle";
 import CTASection from "@/components/CTASection";
-import DDS from "@/components/img/Dds.png";
+import rajbiosisLogo from "@/components/img/rajbiosis-logo.png";
 import {
   ShieldCheck,
   Award,
   Users,
   Activity,
   CheckCircle2,
-  Building2,
   Clock,
-  Wrench,
   ArrowRight,
+  Building2,
   Sparkles,
 } from "lucide-react";
 
 export default function AboutPage() {
   const pillars = [
     {
-      icon: <ShieldCheck className="w-8 h-8 text-blue-600" />,
+      icon: <ShieldCheck className="w-8 h-8 text-blue-500" />,
       title: "Certified Excellence",
       desc: "Every biomedical device, reagent, and diagnostic kit complies with ISO 13485 and international health standards.",
     },
     {
-      icon: <Activity className="w-8 h-8 text-teal-600" />,
+      icon: <Activity className="w-8 h-8 text-teal-400" />,
       title: "Diagnostic Precision",
       desc: "Our analyzers ensure repeatable, accurate results for routine and critical pathology testing.",
     },
     {
-      icon: <Clock className="w-8 h-8 text-amber-600" />,
+      icon: <Clock className="w-8 h-8 text-amber-400" />,
       title: "24/7 AMC & Technical Support",
       desc: "Dedicated service engineers provide rapid 24-hour on-site visits to prevent laboratory downtime.",
     },
     {
-      icon: <Users className="w-8 h-8 text-indigo-600" />,
+      icon: <Users className="w-8 h-8 text-cyan-400" />,
       title: "Nationwide Supply Network",
       desc: "Fast, reliable cold-chain shipping ensuring reagents and consumables arrive at peak stability.",
     },
@@ -52,8 +51,8 @@ export default function AboutPage() {
     <>
       {/* Page Banner */}
       <PageBanner
-        title="About Raj Biosiss"
-        subtitle="Delivering trusted diagnostic and biomedical technologies with innovation, quality, and healthcare precision."
+        title="About Raj Biosis Private Limited"
+        subtitle="Empowering healthcare institutions, pathology laboratories, and diagnostic centers with world-class biomedical systems and dedicated service support."
       />
 
       {/* Main About Story Section */}
@@ -63,16 +62,16 @@ export default function AboutPage() {
         <div className="absolute bottom-10 right-0 h-[350px] w-[350px] rounded-full bg-teal-100/40 blur-[130px] pointer-events-none" />
 
         <div className="container-custom relative z-10 grid items-center gap-16 lg:grid-cols-2">
-          {/* Left Visual Column */}
+          {/* Left Visual Column - New Raj Biosis Logo Image */}
           <div className="relative">
-            {/* Main Visual Frame */}
-            <div className="overflow-hidden rounded-3xl border border-slate-200 bg-slate-50 p-6 shadow-xl shadow-slate-200/60">
+            <div className="overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-b from-slate-50 to-slate-100 p-10 shadow-xl shadow-slate-200/60 flex items-center justify-center min-h-[440px]">
               <Image
-                src={DDS}
-                alt="Central Biomedicals Diagnostic Systems"
-                width={1200}
-                height={900}
-                className="h-[460px] w-full object-contain transition duration-500 hover:scale-105"
+                src={rajbiosisLogo}
+                alt="Raj Biosis Private Limited Logo"
+                width={500}
+                height={500}
+                className="max-h-[380px] w-auto object-contain transition duration-500 hover:scale-105"
+                priority
               />
             </div>
 
@@ -84,10 +83,10 @@ export default function AboutPage() {
               </p>
             </div>
 
-            {/* ISO Certification Badge */}
+            {/* Registered Trademark Badge */}
             <div className="absolute -top-4 right-6 hidden rounded-full bg-teal-600 px-5 py-2 text-xs font-bold text-white shadow-lg border border-teal-400/40 lg:flex items-center gap-2">
               <Award size={16} />
-              <span>ISO 9001:2015 Certified</span>
+              <span>Registered Trademark ®</span>
             </div>
           </div>
 
@@ -96,17 +95,11 @@ export default function AboutPage() {
             <SectionTitle
               badge="Who We Are"
               title="Your Trusted Partner in Biomedical Technology"
-              description="Central Biomedicals is a premier provider of automated biochemistry analyzers, hematology instruments, electrolyte testing systems, and high-purity clinical reagents."
+              description="Raj Biosis Private Limited is a premier provider of automated biochemistry analyzers, hematology instruments, electrolyte testing systems, and high-purity clinical reagents."
             />
 
-            <p className="mt-8 text-lg leading-9 text-slate-600">
-
-              At Raj Biosiss, we are committed to delivering
-              premium-quality healthcare and biomedical technologies
-              designed to improve diagnostics, laboratory performance
-              and medical efficiency for hospitals, pathology labs and
-              research institutions.
-
+            <p className="mt-6 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
+              For over a decade, Raj Biosis Private Limited has partnered with hospitals, diagnostic labs, and medical centers across India to supply state-of-the-art diagnostic machinery. Our focus is delivering reliable equipment backed by quick technical response and preventive maintenance.
             </p>
 
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
@@ -146,17 +139,19 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Core Values / Pillars Section */}
+      {/* Core Values / Pillars Section - Fixed Dark Contrast */}
       <section className="bg-slate-900 py-24 text-white relative overflow-hidden">
         {/* Glow */}
         <div className="absolute top-0 right-1/4 h-[400px] w-[400px] rounded-full bg-blue-500/10 blur-[150px] pointer-events-none" />
 
         <div className="container-custom relative z-10">
+          {/* Passed dark={true} to fix invisible text */}
           <SectionTitle
             badge="Our Core Pillars"
             title="Driven by Precision & Quality"
             description="Our commitment to excellence guides everything we do, from equipment selection to technical AMC support."
             center
+            dark={true}
           />
 
           <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -169,7 +164,7 @@ export default function AboutPage() {
                   {item.icon}
                 </div>
                 <h3 className="text-xl font-bold text-white">{item.title}</h3>
-                <p className="mt-3 text-sm text-slate-300 leading-relaxed">
+                <p className="mt-3 text-sm text-slate-200 leading-relaxed font-normal">
                   {item.desc}
                 </p>
               </div>

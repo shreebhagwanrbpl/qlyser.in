@@ -9,7 +9,7 @@ export default function Testimonials() {
       name: "Dr. Rajesh Kumar",
       role: "Healthcare Specialist",
       review:
-        "Raj Biosiss has consistently delivered reliable diagnostic equipment with outstanding support.",
+        "Raj Biosis Private Limited has consistently delivered reliable diagnostic equipment with outstanding support.",
     },
     {
       name: "Amit Sharma",

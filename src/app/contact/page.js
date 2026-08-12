@@ -16,7 +16,6 @@ import {
   MapPin,
   Clock3,
   MessageSquare,
-  ArrowRight,
   Send,
   ShieldCheck,
   CheckCircle2,
@@ -78,7 +77,7 @@ export default function ContactPage() {
         collection(
           db,
           "websitesQueries",
-          "qlyserin",
+          "rajbiosis",
           "contactQueries"
         ),
         {
@@ -112,7 +111,7 @@ export default function ContactPage() {
           doc(
             db,
             "websites",
-            "qlyserin",
+            "rajbiosis",
             "districts",
             currentDistrict
           )
@@ -135,7 +134,7 @@ export default function ContactPage() {
           doc(
             db,
             "websites",
-            "qlyserin",
+            "rajbiosis",
             "pages",
             "contact"
           )
@@ -160,11 +159,11 @@ export default function ContactPage() {
 
   const emailValue =
     contactInfo.find((x) => x.label === "Email Address")?.value ||
-    "info@centralbiomedicals.com";
+    "info@rajbiosis.com";
 
   const addressValue =
     contactInfo.find((x) => x.label === "Office Address")?.value ||
-    "Central Biomedicals Corporate Office, Healthcare Tech Zone, India";
+    "Raj Biosis Private Limited Corporate Office, Healthcare Tech Zone, India";
 
   const hoursValue =
     contactInfo.find((x) => x.label === "Working Hours")?.value ||
@@ -176,17 +175,16 @@ export default function ContactPage() {
 
   const mapAddress = encodeURIComponent(dynamicAddress);
 
-  // WhatsApp quick text link
   const rawPhone = phoneValue.replace(/\D/g, "");
   const whatsappNumber = rawPhone.length === 10 ? `91${rawPhone}` : rawPhone || "919876543210";
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Hello%20Central%20Biomedicals%2C%20I%20would%20like%20to%20inquire%20about%20your%20biomedical%20equipment%20and%20reagents.`;
+  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Hello%20Raj%20Biosis%20Private%20Limited%2C%20I%20would%20like%20to%20inquire%20about%20your%20biomedical%20equipment%20and%20reagents.`;
 
   return (
     <>
       {/* Banner */}
       <PageBanner
-        title="Contact Us"
-        subtitle="Get in touch with Raj Biosiss for premium diagnostic and biomedical solutions."
+        title="Contact Raj Biosis Private Limited"
+        subtitle="Get in touch with our expert biomedical engineers for sales quotes, pathology reagent orders, and 24/7 AMC technical support."
       />
 
       {/* Main Contact Section */}
@@ -198,26 +196,26 @@ export default function ContactPage() {
           {/* Left Column: Contact Cards (5 cols) */}
           <div className="lg:col-span-5 space-y-6">
             <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl">
-              <span className="inline-flex items-center gap-2 rounded-full bg-teal-50 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-teal-800 border border-teal-200">
-                <ShieldCheck size={14} className="text-teal-600" />
+              <span className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-800 border border-blue-200">
+                <ShieldCheck size={14} className="text-blue-600" />
                 Quick Communication
               </span>
 
-              <h2 className="mt-4 text-3xl font-extrabold text-slate-900 leading-tight">
+              <h2 className="mt-4 text-3xl font-black text-slate-900 leading-tight">
                 Let's Discuss Your Diagnostic Needs
               </h2>
 
-              <p className="mt-3 text-sm text-slate-700 leading-relaxed">
+              <p className="mt-3 text-sm text-slate-700 leading-relaxed font-normal">
                 Whether you need pricing for automated biochemistry analyzers, bulk reagent packs, or emergency repair, our technical team is ready.
               </p>
 
-              {/* Direct Quick Action Buttons */}
+              {/* Direct Quick Action Buttons - Bright Colors */}
               <div className="mt-6 flex flex-wrap gap-3">
                 <a
                   href={`tel:${phoneValue.replace(/\s+/g, "")}`}
-                  className="flex-1 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-slate-900 px-4 text-xs font-bold text-white shadow hover:bg-blue-600 transition"
+                  className="flex-1 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 text-sm font-bold text-white shadow-md hover:bg-blue-700 transition"
                 >
-                  <PhoneCall size={16} />
+                  <PhoneCall size={17} />
                   <span>Call Us Now</span>
                 </a>
 
@@ -225,9 +223,9 @@ export default function ContactPage() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-xs font-bold text-white shadow hover:bg-emerald-700 transition"
+                  className="flex-1 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-bold text-white shadow-md hover:bg-emerald-700 transition"
                 >
-                  <MessageSquare size={16} />
+                  <MessageSquare size={17} />
                   <span>WhatsApp Chat</span>
                 </a>
               </div>
@@ -263,9 +261,9 @@ export default function ContactPage() {
               ].map((c, i) => (
                 <div
                   key={i}
-                  className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-md transition duration-300 hover:border-blue-300 hover:shadow-lg"
+                  className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-md transition duration-300 hover:border-blue-400 hover:shadow-lg"
                 >
-                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-slate-100 border border-slate-200">
+                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-blue-50 border border-blue-100">
                     {c.icon}
                   </div>
                   <div>
@@ -308,7 +306,7 @@ export default function ContactPage() {
                     placeholder="Dr. Rajesh Sharma"
                     value={form.name}
                     onChange={handleChange}
-                    className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                   />
                 </div>
 
@@ -323,7 +321,7 @@ export default function ContactPage() {
                     placeholder="name@labdomain.com"
                     value={form.email}
                     onChange={handleChange}
-                    className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                   />
                 </div>
               </div>
@@ -346,7 +344,7 @@ export default function ContactPage() {
                         phone: e.target.value.replace(/\D/g, ""),
                       })
                     }
-                    className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                   />
                 </div>
 
@@ -361,7 +359,7 @@ export default function ContactPage() {
                     placeholder="Biochemistry Analyzer Quote"
                     value={form.subject}
                     onChange={handleChange}
-                    className="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                   />
                 </div>
               </div>
@@ -377,7 +375,7 @@ export default function ContactPage() {
                   placeholder="Please describe your equipment requirement, lab capacity, or AMC inquiry..."
                   value={form.message}
                   onChange={handleChange}
-                  className="w-full resize-none rounded-xl border border-slate-300 bg-slate-50 px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:bg-white focus:ring-2 focus:ring-blue-100"
+                  className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                 />
               </div>
 
@@ -385,20 +383,20 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-slate-900 px-6 font-bold text-white shadow-xl transition hover:bg-blue-600 hover:scale-[1.01] disabled:opacity-60"
+                className="flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 font-bold text-white shadow-xl transition hover:bg-blue-700 hover:scale-[1.01] disabled:opacity-60 text-base"
               >
                 {submitting ? (
                   <span>Submitting Inquiry...</span>
                 ) : (
                   <>
                     <span>Submit Inquiry</span>
-                    <Send size={16} />
+                    <Send size={18} />
                   </>
                 )}
               </button>
 
-              <div className="flex items-center justify-center gap-2 text-xs text-slate-500 mt-3">
-                <CheckCircle2 size={14} className="text-teal-600" />
+              <div className="flex items-center justify-center gap-2 text-xs font-semibold text-slate-600 mt-3">
+                <CheckCircle2 size={15} className="text-teal-600" />
                 <span>Your information is 100% confidential and secure.</span>
               </div>
             </form>
@@ -416,7 +414,7 @@ export default function ContactPage() {
               height="450"
               loading="lazy"
               className="border-0 w-full"
-              title="Central Biomedicals Location"
+              title="Raj Biosis Private Limited Location"
             ></iframe>
           </div>
         </div>

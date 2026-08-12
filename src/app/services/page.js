@@ -39,17 +39,10 @@ export default function ServicesPage() {
     const fetchServices = async () => {
       try {
         const snap = await getDoc(
-          doc(
-            db,
-            "websites",
-            "qlyserin",
-            "pages",
-            "services"
-          )
+          doc(db, "websites", "rajbiosis", "pages", "services")
         );
 
         if (snap.exists() && snap.data()?.services?.length > 0) {
-          // Merge fetched data with enriched structures
           const dbServices = snap.data().services.map((item, index) => ({
             id: `service-${index}`,
             badge: item.badge || "Biomedical Service",
@@ -80,7 +73,7 @@ export default function ServicesPage() {
       {/* Banner */}
       <PageBanner
         title="Biomedical & Laboratory Services"
-        subtitle="End-to-end equipment supply, engineering installation, pathology reagent cold-chain supply, and 24/7 AMC maintenance support."
+        subtitle="Raj Biosis Private Limited delivers end-to-end equipment supply, engineering installation, pathology reagent cold-chain supply, and 24/7 AMC maintenance support."
       />
 
       {/* Services Grid Section */}
@@ -157,14 +150,15 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* SLA / Service Guarantees Section */}
+      {/* SLA / Service Guarantees Section - Passed dark={true} to fix invisible text */}
       <section className="bg-slate-900 py-24 text-white relative overflow-hidden">
         <div className="container-custom relative z-10">
           <SectionTitle
             badge="Our Service Commitments"
             title="Guaranteed Quality & Zero Lab Downtime"
-            description="We stand behind our biomedical equipment and maintenance contracts with strict SLAs."
+            description="Raj Biosis Private Limited stands behind our biomedical equipment and maintenance contracts with strict SLAs."
             center
+            dark={true}
           />
 
           <div className="mt-16 grid gap-8 md:grid-cols-3">
@@ -190,7 +184,7 @@ export default function ServicesPage() {
                   {g.icon}
                 </div>
                 <h3 className="text-xl font-bold text-white">{g.title}</h3>
-                <p className="mt-3 text-sm text-slate-300 leading-relaxed">{g.desc}</p>
+                <p className="mt-3 text-sm text-slate-200 leading-relaxed font-normal">{g.desc}</p>
               </div>
             ))}
           </div>
@@ -203,7 +197,7 @@ export default function ServicesPage() {
           <SectionTitle
             badge="How We Work"
             title="Simple 3-Step Engagement Process"
-            description="Getting diagnostic equipment or technical AMC support for your lab is straightforward."
+            description="Getting diagnostic equipment or technical AMC support for your lab is straightforward with Raj Biosis Private Limited."
             center
           />
 

@@ -9,12 +9,13 @@ export const metadata = {
   ),
 
   title:
-    "Biomedical Equipment Supplier in India | Raj Biosiss",
+    "Biomedical Equipment Supplier in India | Raj Biosis Private Limited",
 
   description:
-    "Raj Biosiss supplies CBC Machines, Hematology Analyzers, Biochemistry Analyzers, ELISA Readers and laboratory equipment across India.",
+    "Raj Biosis Private Limited supplies CBC Machines, Hematology Analyzers, Biochemistry Analyzers, ELISA Readers and laboratory equipment across India.",
 
   keywords: [
+    "Raj Biosis Private Limited",
     "Biomedical Equipment Supplier",
     "Laboratory Equipment Supplier",
     "CBC Machine Supplier",
@@ -26,21 +27,21 @@ export const metadata = {
 
   openGraph: {
     title:
-      "Biomedical Equipment Supplier in India | Raj Biosiss",
+      "Biomedical Equipment Supplier in India | Raj Biosis Private Limited",
 
     description:
       "Supplier of biomedical and laboratory equipment across India.",
 
     url: "https://qlyser.in",
 
-    siteName: "Raj Biosiss",
+    siteName: "Raj Biosis Private Limited",
 
     images: [
       {
-        url: "/logo.png",
+        url: "/images/rajbiosis-logo.png",
         width: 1200,
         height: 630,
-        alt: "Raj Biosiss",
+        alt: "Raj Biosis Private Limited",
       },
     ],
 
@@ -52,12 +53,12 @@ export const metadata = {
     card: "summary_large_image",
 
     title:
-      "Biomedical Equipment Supplier in India | Raj Biosiss",
+      "Biomedical Equipment Supplier in India | Raj Biosis Private Limited",
 
     description:
       "Supplier of biomedical and laboratory equipment across India.",
 
-    images: ["/logo.png"],
+    images: ["/images/rajbiosis-logo.png"],
   },
 
   alternates: {

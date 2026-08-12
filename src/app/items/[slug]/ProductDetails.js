@@ -236,7 +236,7 @@ export default function ProductDetails({ slug }) {
                 product.title,
             brand: {
                 "@type": "Brand",
-                name: product.brand || "Raj Biosiss",
+                name: product.brand || "Raj Biosis Private Limited",
             },
         }
         : null;
@@ -962,8 +962,8 @@ ${product?.desc}
 
                                     {[
                                         {
-                                            title: `Why Choose Raj Biosiss in ${cityName}?`,
-                                            text: `Raj Biosiss is a trusted supplier and distributor of ${product.title} in ${cityName}. We provide high-quality biomedical and laboratory equipment for hospitals, pathology laboratories, diagnostic centres and healthcare facilities.`,
+                                            title: `Why Choose Raj Biosis Private Limited in ${cityName}?`,
+                                            text: `Raj Biosis Private Limited is a trusted supplier and distributor of ${product.title} in ${cityName}. We provide high-quality biomedical and laboratory equipment for hospitals, pathology laboratories, diagnostic centres and healthcare facilities.`,
                                         },
                                         {
                                             title: `Features of ${product.title}`,
@@ -975,11 +975,11 @@ ${product?.desc}
                                         },
                                         {
                                             title: `${product.title} Supplier in ${cityName}`,
-                                            text: `Raj Biosiss supplies ${product.title} in ${cityName} with technical support, installation assistance and customer service for hospitals and laboratories.`,
+                                            text: `Raj Biosis Private Limited supplies ${product.title} in ${cityName} with technical support, installation assistance and customer service for hospitals and laboratories.`,
                                         },
                                         {
                                             title: `${product.title} Dealer in ${cityName}`,
-                                            text: `Raj Biosiss is a trusted dealer of ${product.title} in ${cityName}. We supply biomedical equipment, laboratory instruments, diagnostic analyzers and healthcare devices.`,
+                                            text: `Raj Biosis Private Limited is a trusted dealer of ${product.title} in ${cityName}. We supply biomedical equipment, laboratory instruments, diagnostic analyzers and healthcare devices.`,
                                         },
                                         {
                                             title: `${product.title} Distributor in ${cityName}`,
@@ -987,7 +987,7 @@ ${product?.desc}
                                         },
                                         {
                                             title: `Buy ${product.title} in ${cityName}`,
-                                            text: `Buy high-quality ${product.title} in ${cityName} at competitive prices. Contact Raj Biosiss for the latest quotation and product availability.`,
+                                            text: `Buy high-quality ${product.title} in ${cityName} at competitive prices. Contact Raj Biosis Private Limited for the latest quotation and product availability.`,
                                         },
                                         {
                                             title: `${product.title} Price in ${cityName}`,
@@ -1082,7 +1082,7 @@ ${product?.desc}
                                             a: "Yes. We provide safe packaging and reliable logistics support across India.",
                                         },
                                         {
-                                            q: "How can I contact Raj Biosiss?",
+                                            q: "How can I contact Raj Biosis Private Limited?",
                                             a: "You can fill out the enquiry form or contact our team directly for quotations and technical assistance.",
                                         },
                                     ].map((item, index) => (

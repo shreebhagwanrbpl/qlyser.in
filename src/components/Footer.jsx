@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Mail, Phone, MapPin, ShieldCheck, Heart } from "lucide-react";
+import { Mail, Phone, MapPin, ShieldCheck } from "lucide-react";
+import rajbiosisLogo from "@/components/img/rajbiosis-logo.png";
 
 export default function Footer() {
   const [contactInfo, setContactInfo] = useState([]);
@@ -32,13 +34,7 @@ export default function Footer() {
     const loadContact = async () => {
       try {
         const snap = await getDoc(
-          doc(
-            db,
-            "websites",
-            "qlyserin",
-            "pages",
-            "contact"
-          )
+          doc(db, "websites", "rajbiosis", "pages", "contact")
         );
         if (snap.exists()) {
           setContactInfo(snap.data().contactInfo || []);
@@ -57,13 +53,7 @@ export default function Footer() {
       if (!district) return;
       try {
         const snap = await getDoc(
-          doc(
-            db,
-            "websites",
-            "qlyserin",
-            "districts",
-            district
-          )
+          doc(db, "websites", "rajbiosis", "districts", district)
         );
         if (snap.exists()) {
           setDistrictData(snap.data());
@@ -79,10 +69,10 @@ export default function Footer() {
     contactInfo.find((x) => x.label === "Phone Number")?.value || "+91 98765 43210";
 
   const email =
-    contactInfo.find((x) => x.label === "Email Address")?.value || "info@centralbiomedicals.com";
+    contactInfo.find((x) => x.label === "Email Address")?.value || "info@rajbiosis.com";
 
   const address =
-    contactInfo.find((x) => x.label === "Office Address")?.value || "Central Biomedicals Corporate Office, Healthcare Tech Zone, India";
+    contactInfo.find((x) => x.label === "Office Address")?.value || "Raj Biosis Private Limited Corporate Office, Healthcare Tech Zone, India";
 
   const dynamicAddress = districtData
     ? `${districtData.district}, ${districtData.state}, India`
@@ -104,21 +94,27 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           {/* Col 1: Brand & Tagline */}
           <div>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="h-10 w-10 overflow-hidden rounded-xl bg-white p-1 flex-shrink-0">
+                <Image
+                  src={rajbiosisLogo}
+                  alt="Raj Biosis Logo"
+                  width={60}
+                  height={60}
+                  className="h-full w-full object-contain"
+                />
+              </div>
+              <div>
+                <h2 className="text-xl font-black tracking-tight text-white leading-tight">
+                  Raj Biosis
+                </h2>
+                <p className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest">
+                  Private Limited
+                </p>
+              </div>
+            </div>
 
-            <h2 className="text-3xl font-black">
-
-              <span className="text-slate-300">
-                Raj
-              </span>
-
-              <span className="text-white">
-                {" "}Biosis
-              </span>
-
-
-            </h2>
-
-            <p className="mt-4 text-sm leading-relaxed text-slate-300">
+            <p className="text-sm leading-relaxed text-slate-300">
               Delivering trusted diagnostic machinery, biochemistry reagents, hematology solutions, and 24/7 technical AMC maintenance support across India.
             </p>
 
@@ -195,13 +191,10 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-
-        <div className="mt-16 flex flex-col items-center justify-between gap-5 border-t border-slate-500/20 pt-8 text-sm text-slate-500 md:flex-row">
-
-          <p>
-
-            © 2026 Raj Biosiss. All Rights Reserved.
-
+        <div className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-slate-800 pt-6 text-xs text-slate-400 md:flex-row">
+          <p>© {new Date().getFullYear()} Raj Biosis Private Limited. All Rights Reserved.</p>
+          <p className="text-slate-400">
+            Precision Diagnostic & Biomedical Solutions
           </p>
         </div>
       </div>

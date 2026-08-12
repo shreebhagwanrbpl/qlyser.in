@@ -46,7 +46,7 @@ export default function SeoContent({ city = "" }) {
                     <div className="space-y-7 text-lg leading-9 text-slate-600">
 
                         <p>
-                            Raj Biosiss is a trusted supplier of biomedical
+                            Raj Biosis Private Limited is a trusted supplier of biomedical
                             and laboratory equipment in <strong>{location}</strong>.
                             We provide CBC Machines, Hematology Analyzers,
                             Biochemistry Analyzers, Urine Analyzers,
@@ -71,7 +71,7 @@ export default function SeoContent({ city = "" }) {
                         </p>
 
                         <p>
-                            Raj Biosiss supplies equipment across
+                            Raj Biosis Private Limited supplies equipment across
                             multiple districts and cities, helping healthcare
                             providers improve testing efficiency and
                             diagnostic accuracy.
