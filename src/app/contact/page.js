@@ -1,5 +1,4 @@
 "use client";
-
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
@@ -15,59 +14,67 @@ import {
   Phone,
   MapPin,
   Clock3,
-  MessageSquare,
-  Send,
-  ShieldCheck,
-  CheckCircle2,
-  PhoneCall,
 } from "lucide-react";
+
 import PageBanner from "@/components/PageBanner";
 import CTASection from "@/components/CTASection";
 
 export default function ContactPage() {
   const [loading, setLoading] = useState(true);
-  const [districtData, setDistrictData] = useState(null);
-  const [contactInfo, setContactInfo] = useState([]);
-  const [submitting, setSubmitting] = useState(false);
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    subject: "",
-    message: "",
-  });
+  const [districtData, setDistrictData] =
+    useState(null);
+  const [contactInfo, setContactInfo] =
+    useState([]);
 
+  const [submitting, setSubmitting] =
+    useState(false);
   const pathname = usePathname();
-  const pathParts = pathname.split("/").filter(Boolean);
-  const currentDistrict = pathParts.length > 0 && pathParts[0] !== "contact" ? pathParts[0] : null;
 
+  const pathParts = pathname
+    .split("/")
+    .filter(Boolean);
+
+  const currentDistrict =
+    pathParts.length > 0
+      ? pathParts[0]
+      : null;
   const handleChange = (e) => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRegex = /^[6-9]\d{9}$/;
+    const emailRegex =
+      /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const phoneRegex =
+      /^[6-9]\d{9}$/;
 
     if (!form.name.trim()) {
-      return toast.error("Full name is required");
+      return toast.error(
+        "Name is required"
+      );
     }
 
     if (!emailRegex.test(form.email)) {
-      return toast.error("Please enter a valid email address");
+      return toast.error(
+        "Enter valid email"
+      );
     }
 
     if (!phoneRegex.test(form.phone)) {
-      return toast.error("Please enter a valid 10-digit mobile number");
+      return toast.error(
+        "Enter valid mobile number"
+      );
     }
 
     if (!form.message.trim()) {
-      return toast.error("Message content is required");
+      return toast.error(
+        "Message is required"
+      );
     }
 
     try {
@@ -77,7 +84,7 @@ export default function ContactPage() {
         collection(
           db,
           "websitesQueries",
-          "rajbiosis",
+          "qlyserin",
           "contactQueries"
         ),
         {
@@ -86,7 +93,9 @@ export default function ContactPage() {
         }
       );
 
-      toast.success("Thank you! Your inquiry has been submitted successfully.");
+      toast.success(
+        "Message submitted successfully"
+      );
 
       setForm({
         name: "",
@@ -97,25 +106,35 @@ export default function ContactPage() {
       });
     } catch (err) {
       console.error(err);
-      toast.error("Something went wrong while submitting. Please try again.");
+      toast.error(
+        "Something went wrong"
+      );
     } finally {
       setSubmitting(false);
     }
   };
-
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
   useEffect(() => {
     const loadDistrict = async () => {
       if (!currentDistrict) return;
+
       try {
         const snap = await getDoc(
           doc(
             db,
             "websites",
-            "rajbiosis",
+            "qlyserin",
             "districts",
             currentDistrict
           )
         );
+
         if (snap.exists()) {
           setDistrictData(snap.data());
         }
@@ -126,7 +145,6 @@ export default function ContactPage() {
 
     loadDistrict();
   }, [currentDistrict]);
-
   useEffect(() => {
     const loadContact = async () => {
       try {
@@ -134,14 +152,16 @@ export default function ContactPage() {
           doc(
             db,
             "websites",
-            "rajbiosis",
+            "qlyserin",
             "pages",
             "contact"
           )
         );
 
         if (snap.exists()) {
-          setContactInfo(snap.data().contactInfo || []);
+          setContactInfo(
+            snap.data().contactInfo || []
+          );
         }
       } catch (err) {
         console.log(err);
@@ -153,269 +173,271 @@ export default function ContactPage() {
     loadContact();
   }, []);
 
-  const phoneValue =
-    contactInfo.find((x) => x.label === "Phone Number")?.value ||
-    "+91 98765 43210";
 
-  const emailValue =
-    contactInfo.find((x) => x.label === "Email Address")?.value ||
-    "info@rajbiosis.com";
 
-  const addressValue =
-    contactInfo.find((x) => x.label === "Office Address")?.value ||
-    "Raj Biosis Private Limited Corporate Office, Healthcare Tech Zone, India";
+  const getContactField = (labels) => {
+    const found = contactInfo.find(
+      (x) => labels.some(l => x.label?.toLowerCase() === l.toLowerCase())
+    );
+    return found ? found.value : "";
+  };
 
-  const hoursValue =
-    contactInfo.find((x) => x.label === "Working Hours")?.value ||
-    "Mon - Sat: 9:00 AM - 7:00 PM (24/7 Emergency Support)";
+  const phone = getContactField(["phone", "phone number", "mobile", "mobile number"]);
+  const email = getContactField(["email", "email address"]);
+  const address = getContactField(["address", "office address", "address/office address"]);
+  const hours = getContactField(["working hours", "hours", "work hours"]);
 
-  const dynamicAddress = districtData
-    ? `${districtData.district}, ${districtData.state}, India`
-    : addressValue;
+  const dynamicAddress =
+    districtData
+      ? `${districtData.district}, ${districtData.state}, India`
+      : address;
 
-  const mapAddress = encodeURIComponent(dynamicAddress);
+  let phoneValues = [];
+  if (Array.isArray(phone)) {
+    phoneValues = phone.map(p => String(p).trim());
+  } else if (phone !== null && phone !== undefined && phone !== "") {
+    phoneValues = String(phone).split(/[\n,]+/).map(p => p.trim());
+  }
 
-  const rawPhone = phoneValue.replace(/\D/g, "");
-  const whatsappNumber = rawPhone.length === 10 ? `91${rawPhone}` : rawPhone || "919876543210";
-  const whatsappUrl = `https://wa.me/${whatsappNumber}?text=Hello%20Raj%20Biosis%20Private%20Limited%2C%20I%20would%20like%20to%20inquire%20about%20your%20biomedical%20equipment%20and%20reagents.`;
+  const mapAddress = encodeURIComponent(
+    dynamicAddress
+  );
+  if (loading) {
+    return (
+      <section className="section-padding">
+        <div className="container-custom">
 
+          <div className="grid lg:grid-cols-2 gap-12">
+
+            <div>
+              <div className="h-12 w-64 bg-slate-200 rounded animate-pulse mb-8" />
+
+              {[...Array(4)].map((_, i) => (
+                <div
+                  key={i}
+                  className="h-28 bg-slate-200 rounded-3xl animate-pulse mb-6"
+                />
+              ))}
+            </div>
+
+            <div className="bg-white p-10 rounded-3xl">
+              {[...Array(6)].map((_, i) => (
+                <div
+                  key={i}
+                  className="h-14 bg-slate-200 rounded-2xl animate-pulse mb-5"
+                />
+              ))}
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+    );
+  }
   return (
     <>
       {/* Banner */}
       <PageBanner
-        title="Contact Raj Biosis Private Limited"
-        subtitle="Get in touch with our expert biomedical engineers for sales quotes, pathology reagent orders, and 24/7 AMC technical support."
+        title="Contact Us"
+        subtitle="Get in touch with  Raj Biosis for premium diagnostic and biomedical solutions."
       />
 
-      {/* Main Contact Section */}
-      <section className="relative overflow-hidden bg-slate-50 py-24">
-        {/* Glow */}
-        <div className="absolute top-0 left-1/4 h-[500px] w-[500px] rounded-full bg-blue-100/50 blur-[150px] pointer-events-none" />
+      {/* Contact Section */}
+      <section className="section-padding bg-white">
+        <div className="container-custom grid lg:grid-cols-2 gap-14">
 
-        <div className="container-custom relative z-10 grid lg:grid-cols-12 gap-12 items-start">
-          {/* Left Column: Contact Cards (5 cols) */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="rounded-3xl border border-slate-200 bg-white p-8 shadow-xl">
-              <span className="inline-flex items-center gap-2 rounded-full bg-blue-50 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-blue-800 border border-blue-200">
-                <ShieldCheck size={14} className="text-blue-600" />
-                Quick Communication
-              </span>
+          {/* Left Info */}
+          <div>
 
-              <h2 className="mt-4 text-3xl font-black text-slate-900 leading-tight">
-                Let's Discuss Your Diagnostic Needs
-              </h2>
+            <span className="inline-block bg-sky-100 text-sky-700 px-5 py-2 rounded-full font-semibold mb-5">
+              Contact Information
+            </span>
 
-              <p className="mt-3 text-sm text-slate-700 leading-relaxed font-normal">
-                Whether you need pricing for automated biochemistry analyzers, bulk reagent packs, or emergency repair, our technical team is ready.
-              </p>
+            <h2 className="section-title">
+              Let’s Start a Conversation
+            </h2>
 
-              {/* Direct Quick Action Buttons - Bright Colors */}
-              <div className="mt-6 flex flex-wrap gap-3">
-                <a
-                  href={`tel:${phoneValue.replace(/\s+/g, "")}`}
-                  className="flex-1 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 text-sm font-bold text-white shadow-md hover:bg-blue-700 transition"
-                >
-                  <PhoneCall size={17} />
-                  <span>Call Us Now</span>
-                </a>
+            <p className="section-subtitle">
+              Reach out to us for
+              healthcare consultation,
+              biomedical products, and
+              advanced diagnostic support.
+            </p>
 
-                <a
-                  href={whatsappUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 text-sm font-bold text-white shadow-md hover:bg-emerald-700 transition"
-                >
-                  <MessageSquare size={17} />
-                  <span>WhatsApp Chat</span>
-                </a>
-              </div>
-            </div>
+            {/* Contact Cards */}
+            <div className="space-y-6 mt-10">
 
-            {/* Contact Details Grid Cards */}
-            <div className="space-y-4">
-              {[
-                {
-                  icon: <Phone className="w-6 h-6 text-blue-600" />,
-                  title: "Phone Number",
-                  val: phoneValue,
-                  sub: "Mon-Sat 9AM to 7PM",
-                },
-                {
-                  icon: <Mail className="w-6 h-6 text-teal-600" />,
-                  title: "Email Address",
-                  val: emailValue,
-                  sub: "Rapid response within 2 hours",
-                },
-                {
-                  icon: <MapPin className="w-6 h-6 text-amber-600" />,
-                  title: "Office Address",
-                  val: dynamicAddress,
-                  sub: "Nationwide service & dispatch",
-                },
-                {
-                  icon: <Clock3 className="w-6 h-6 text-indigo-600" />,
-                  title: "Working & Emergency Hours",
-                  val: hoursValue,
-                  sub: "24/7 Breakdown Assistance",
-                },
-              ].map((c, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-md transition duration-300 hover:border-blue-400 hover:shadow-lg"
-                >
-                  <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-blue-50 border border-blue-100">
-                    {c.icon}
-                  </div>
-                  <div>
-                    <h4 className="text-base font-extrabold text-slate-900">
-                      {c.title}
-                    </h4>
-                    <p className="mt-1 text-sm font-bold text-slate-800 break-words">
-                      {c.val}
-                    </p>
-                    <p className="mt-0.5 text-xs text-slate-500">{c.sub}</p>
+              <div className="flex items-start gap-5 bg-slate-50 p-6 rounded-[28px] border border-slate-100">
+                <div className="w-14 h-14 rounded-2xl bg-sky-100 flex items-center justify-center text-sky-700 flex-shrink-0">
+                  <Phone size={24} />
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-lg">
+                    Phone Number
+                  </h4>
+
+                  <div className="text-slate-600 mt-2 flex flex-col">
+                    {phoneValues.map((num, idx) => (
+                      <a key={idx} href={`tel:${num}`} className="hover:text-sky-700 transition">
+                        {num}
+                      </a>
+                    ))}
+                    {phoneValues.length === 0 && <p>N/A</p>}
                   </div>
                 </div>
-              ))}
+              </div>
+
+              <div className="flex items-start gap-5 bg-slate-50 p-6 rounded-[28px] border border-slate-100">
+                <div className="w-14 h-14 rounded-2xl bg-sky-100 flex items-center justify-center text-sky-700 flex-shrink-0">
+                  <Mail size={24} />
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-lg">
+                    Email Address
+                  </h4>
+
+                  <p className="text-slate-600 mt-2">
+                    <a href={`mailto:${email}`} className="hover:text-sky-700 transition">
+                      {email}
+                    </a>
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-5 bg-slate-50 p-6 rounded-[28px] border border-slate-100">
+                <div className="w-14 h-14 rounded-2xl bg-sky-100 flex items-center justify-center text-sky-700 flex-shrink-0">
+                  <MapPin size={24} />
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-lg">
+                    Office Address
+                  </h4>
+
+                  <p className="text-slate-600 mt-2">
+                    {dynamicAddress}
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-5 bg-slate-50 p-6 rounded-[28px] border border-slate-100">
+                <div className="w-14 h-14 rounded-2xl bg-sky-100 flex items-center justify-center text-sky-700 flex-shrink-0">
+                  <Clock3 size={24} />
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-lg">
+                    Working Hours
+                  </h4>
+
+                  <p className="text-slate-600 mt-2">
+                    {hours}
+                  </p>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          {/* Right Column: High Contrast Contact Form (7 cols) */}
-          <div className="lg:col-span-7 rounded-3xl border border-slate-200 bg-white p-8 lg:p-10 shadow-2xl">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-5">
-              <div>
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-4 py-1.5 text-xs font-bold text-blue-800 border border-blue-200">
-                  ⚡ Fast Response
-                </span>
-                <h3 className="mt-3 text-3xl font-black text-slate-900">
-                  Send Us an Inquiry
-                </h3>
-              </div>
-            </div>
+          {/* Right Form */}
+          <div className="bg-white rounded-[40px] p-8 lg:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
 
-            <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-              <div className="grid gap-5 sm:grid-cols-2">
-                {/* Full Name */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-2">
-                    Full Name *
-                  </label>
-                  <input
-                    type="text"
-                    name="name"
-                    placeholder="Dr. Rajesh Sharma"
-                    value={form.name}
-                    onChange={handleChange}
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
-                  />
-                </div>
+            <h3 className="text-3xl font-bold text-slate-900">
+              Send Us Message
+            </h3>
 
-                {/* Email Address */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="name@labdomain.com"
-                    value={form.email}
-                    onChange={handleChange}
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
-                  />
-                </div>
-              </div>
+            <p className="text-slate-500 mt-3">
+              Fill out the form and our
+              team will contact you soon.
+            </p>
 
-              <div className="grid gap-5 sm:grid-cols-2">
-                {/* Phone Number */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-2">
-                    Mobile Number (10-digit) *
-                  </label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="9876543210"
-                    maxLength={10}
-                    value={form.phone}
-                    onChange={(e) =>
-                      setForm({
-                        ...form,
-                        phone: e.target.value.replace(/\D/g, ""),
-                      })
-                    }
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
-                  />
-                </div>
+            <form
+              onSubmit={handleSubmit}
+              className="mt-8 space-y-5"
+            >
 
-                {/* Subject */}
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-2">
-                    Subject / Product
-                  </label>
-                  <input
-                    type="text"
-                    name="subject"
-                    placeholder="Biochemistry Analyzer Quote"
-                    value={form.subject}
-                    onChange={handleChange}
-                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
-                  />
-                </div>
-              </div>
+              <input
+                type="text"
+                name="name"
+                placeholder="Full Name"
+                value={form.name}
+                onChange={handleChange}
+                className="w-full border border-slate-200 rounded-2xl px-5 py-4 outline-none focus:border-sky-600"
+              />
 
-              {/* Message */}
-              <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-800 mb-2">
-                  Message & Details *
-                </label>
-                <textarea
-                  rows={5}
-                  name="message"
-                  placeholder="Please describe your equipment requirement, lab capacity, or AMC inquiry..."
-                  value={form.message}
-                  onChange={handleChange}
-                  className="w-full resize-none rounded-xl border border-slate-300 bg-white px-4 py-3.5 text-sm font-bold text-slate-900 placeholder:text-slate-400 outline-none transition focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
-                />
-              </div>
+              <input
+                type="email"
+                name="email"
+                placeholder="Email Address"
+                value={form.email}
+                onChange={handleChange}
+                className="w-full border border-slate-200 rounded-2xl px-5 py-4 outline-none focus:border-sky-600"
+              />
 
-              {/* Submit Button */}
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone Number"
+                maxLength={10}
+                value={form.phone}
+                onChange={(e) =>
+                  setForm({
+                    ...form,
+                    phone: e.target.value.replace(/\D/g, ""),
+                  })
+                }
+                className="w-full border border-slate-200 rounded-2xl px-5 py-4 outline-none focus:border-sky-600"
+              />
+
+              <input
+                type="text"
+                name="subject"
+                placeholder="Subject"
+                value={form.subject}
+                onChange={handleChange}
+                className="w-full border border-slate-200 rounded-2xl px-5 py-4 outline-none focus:border-sky-600"
+              />
+
+              <textarea
+                rows={5}
+                name="message"
+                placeholder="Your Message"
+                value={form.message}
+                onChange={handleChange}
+                className="w-full border border-slate-200 rounded-2xl px-5 py-4 outline-none focus:border-sky-600 resize-none"
+              />
+
               <button
                 type="submit"
                 disabled={submitting}
-                className="flex h-14 w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-6 font-bold text-white shadow-xl transition hover:bg-blue-700 hover:scale-[1.01] disabled:opacity-60 text-base"
+                className="w-full bg-sky-700 text-white py-4 rounded-2xl font-semibold hover:bg-sky-800 transition"
               >
-                {submitting ? (
-                  <span>Submitting Inquiry...</span>
-                ) : (
-                  <>
-                    <span>Submit Inquiry</span>
-                    <Send size={18} />
-                  </>
-                )}
+                {submitting
+                  ? "Submitting..."
+                  : "Send Message"}
               </button>
 
-              <div className="flex items-center justify-center gap-2 text-xs font-semibold text-slate-600 mt-3">
-                <CheckCircle2 size={15} className="text-teal-600" />
-                <span>Your information is 100% confidential and secure.</span>
-              </div>
             </form>
           </div>
         </div>
       </section>
 
-      {/* Google Map Section */}
-      <section className="py-16 bg-white">
+      {/* Google Map */}
+      <section className="pb-24 bg-white">
         <div className="container-custom">
-          <div className="rounded-3xl overflow-hidden border border-slate-200 shadow-xl">
+          <div className="rounded-[40px] overflow-hidden border border-slate-100 card-shadow">
+
             <iframe
               src={`https://maps.google.com/maps?q=${mapAddress}&z=13&output=embed`}
               width="100%"
-              height="450"
+              height="500"
               loading="lazy"
               className="border-0 w-full"
-              title="Raj Biosis Private Limited Location"
             ></iframe>
+
           </div>
         </div>
       </section>
