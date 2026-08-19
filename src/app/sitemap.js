@@ -1,140 +1,109 @@
+import { fetchFullCatalog } from "@/lib/data-fetcher-server";
+import { BASE_URL, computePageSeoScore } from "@/lib/seo-utils";
 import { db } from "@/lib/firebase";
-import {
-    collection,
-    getDocs,
-    doc,
-    getDoc,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
+
+export const revalidate = 3600;
 
 export default async function sitemap() {
-    const baseUrl =
-        "https://qlyser.in";
+  const urls = [];
+  const now = new Date();
 
-    const urls = [];
+  // 1. Static Core Pages (High Priority)
+  urls.push(
+    { url: BASE_URL, lastModified: now, changeFrequency: "daily", priority: 1.0 },
+    { url: `${BASE_URL}/products`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
+    { url: `${BASE_URL}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: `${BASE_URL}/services`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: `${BASE_URL}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.8 }
+  );
 
-    // Static Pages
-    urls.push(
-        {
-            url: baseUrl,
-            lastModified: new Date(),
-        },
-        {
-            url: `${baseUrl}/about`,
-            lastModified: new Date(),
-        },
-        {
-            url: `${baseUrl}/services`,
-            lastModified: new Date(),
-        },
-        {
-            url: `${baseUrl}/contact`,
-            lastModified: new Date(),
-        },
-        {
-            url: `${baseUrl}/items`,
-            lastModified: new Date(),
-        }
-    );
+  try {
+    // 2. Fetch Catalog Products
+    const products = await fetchFullCatalog();
 
-    try {
-        // DISTRICTS
-        const districtSnap =
-            await getDocs(
-                collection(
-                    db,
-                    "websites",
-                    "qlyserin",
-                    "districts"
-                )
-            );
+    // Track Categories & Brands for indexing
+    const categoriesSet = new Set();
+    const brandsSet = new Set();
 
-        const districts =
-            districtSnap.docs.map(
-                (doc) => doc.data()
-            );
+    products.forEach((product) => {
+      if (!product.slug) return;
 
-        districts.forEach((district) => {
-            const slug =
-                district.slug;
+      const canonicalUrl = `${BASE_URL}/products/${product.slug}`;
+      const score = computePageSeoScore({
+        canonicalUrl,
+        isIndexable: product.isPublished !== false,
+        title: product.title,
+        description: product.description,
+        specsCount: product.specs ? Object.keys(product.specs).length : 0,
+        hasImageWithAlt: !!(product.image || product.images?.length),
+        hasSchema: true,
+      });
 
-            if (!slug) return;
-
-            urls.push(
-                {
-                    url: `${baseUrl}/${slug}`,
-                    lastModified:
-                        new Date(),
-                },
-                {
-                    url: `${baseUrl}/${slug}/about`,
-                    lastModified:
-                        new Date(),
-                },
-                {
-                    url: `${baseUrl}/${slug}/services`,
-                    lastModified:
-                        new Date(),
-                },
-                {
-                    url: `${baseUrl}/${slug}/contact`,
-                    lastModified:
-                        new Date(),
-                },
-                {
-                    url: `${baseUrl}/${slug}/items`,
-                    lastModified:
-                        new Date(),
-                }
-            );
+      // Quality Gate: Only include products scoring 50+
+      if (score >= 50 && product.isPublished !== false) {
+        urls.push({
+          url: canonicalUrl,
+          lastModified: now,
+          changeFrequency: "weekly",
+          priority: 0.9,
         });
+      }
 
-        // PRODUCTS
-        const productDoc =
-            await getDoc(
-                doc(
-                    db,
-                    "websites",
-                    "qlyserin",
-                    "pages",
-                    "products"
-                )
-            );
+      if (product.category) {
+        categoriesSet.add(product.category.toLowerCase().replace(/\s+/g, "-"));
+      }
 
-        const products =
-            productDoc.data()
-                ?.products || [];
+      if (product.brand) {
+        brandsSet.add(product.brand.toLowerCase().replace(/\s+/g, "-"));
+      }
+    });
 
-        products.forEach(
-            (product) => {
-                if (!product.slug) return;
+    // 3. Category Authority Pages
+    categoriesSet.forEach((categorySlug) => {
+      urls.push({
+        url: `${BASE_URL}/category/${categorySlug}`,
+        lastModified: now,
+        changeFrequency: "weekly",
+        priority: 0.85,
+      });
+    });
 
-                // Main Product URL
-                urls.push({
-                    url: `${baseUrl}/items/${product.slug}`,
-                    lastModified:
-                        new Date(),
-                });
+    // 4. Brand Authority Pages
+    brandsSet.forEach((brandSlug) => {
+      urls.push({
+        url: `${BASE_URL}/brand/${brandSlug}`,
+        lastModified: now,
+        changeFrequency: "weekly",
+        priority: 0.85,
+      });
+    });
 
-                // District Product URLs
-                districts.forEach(
-                    (district) => {
-                        if (!district.slug) return;
-
-                        urls.push({
-                            url: `${baseUrl}/${district.slug}/items/${product.slug}`,
-                            lastModified:
-                                new Date(),
-                        });
-                    }
-                );
-            }
-        );
-    } catch (error) {
-        console.error(
-            "Sitemap Error:",
-            error
-        );
+    // 5. Service Districts (Single Canonical URL per District)
+    try {
+      const districtSnap = await getDocs(
+        collection(db, "websites", "qlyserin", "districts")
+      );
+      if (!districtSnap.empty) {
+        districtSnap.docs.forEach((docSnap) => {
+          const data = docSnap.data();
+          const slug = data.slug || docSnap.id;
+          if (slug) {
+            urls.push({
+              url: `${BASE_URL}/district/${slug}`,
+              lastModified: now,
+              changeFrequency: "monthly",
+              priority: 0.75,
+            });
+          }
+        });
+      }
+    } catch (distErr) {
+      console.warn("Sitemap: District fetch skipped or empty", distErr);
     }
+  } catch (error) {
+    console.error("Sitemap generation error:", error);
+  }
 
-    return urls;
+  return urls;
 }

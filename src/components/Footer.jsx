@@ -267,7 +267,7 @@ export default function Footer() {
                 Services
               </Link>
 
-              <Link href={makeLink("/items")} className="hover:text-sky-700 transition">
+              <Link href={makeLink("/products")} className="hover:text-sky-700 transition">
                 Products
               </Link>
 
@@ -288,7 +288,7 @@ export default function Footer() {
               {categories.map((cat) => {
                 const catSlug = cat.replace(/\s+/g, "-").toLowerCase();
                 return (
-                  <Link key={cat} href={makeLink(`/items#${catSlug}`)} className="hover:text-sky-700 transition">
+                  <Link key={cat} href={`/category/${catSlug}`} className="hover:text-sky-700 transition">
                     {cat}
                   </Link>
                 );

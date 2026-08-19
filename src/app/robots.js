@@ -1,11 +1,29 @@
-export default function robots() {
-    return {
-        rules: {
-            userAgent: "*",
-            allow: "/",
-        },
+import { BASE_URL } from "@/lib/seo-utils";
 
-        sitemap:
-            "https://qlyser.in/sitemap.xml",
-    };
+export default function robots() {
+  return {
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: [
+          "/api/",
+          "/admin/",
+          "/*?*",
+          "/private/",
+          "/search?",
+        ],
+      },
+      {
+        userAgent: "Googlebot",
+        allow: "/",
+        disallow: [
+          "/api/",
+          "/admin/",
+          "/*?*",
+        ],
+      },
+    ],
+    sitemap: `${BASE_URL}/sitemap.xml`,
+  };
 }

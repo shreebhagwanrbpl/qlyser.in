@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
 
@@ -58,9 +60,9 @@ const ProductCard = React.memo(function ProductCard({ product, district }) {
                         href={
                             district
                                 ? `/${district}/items/${product.slug}`
-                                : `/items/${product.slug}`
+                                : `/products/${product.slug}`
                         }
-                        className="px-8 py-4 rounded-2xl bg-[#FFF3BF] text-[#1E293B] font-semibold hover:bg-[#FDE68A] transition"
+                        className="px-8 py-4 rounded-2xl bg-[#FFF3BF] text-[#1E293B] font-semibold hover:bg-[#FDE68A] transition hover:scale-105 shadow-md"
                     >
                         Get Quote
                     </Link>
