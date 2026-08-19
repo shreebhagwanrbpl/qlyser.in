@@ -31,10 +31,12 @@ const makeSlug = (text = "") =>
         .trim()
         .replace(/[^a-z0-9\s-]/g, "")
         .replace(/\s+/g, "-");
-export default function ProductDetails({ slug }) {
-    const [product, setProduct] = useState(null);
+export default function ProductDetails({ slug, initialProduct = null }) {
+    const [product, setProduct] = useState(initialProduct);
     const [imageLoaded, setImageLoaded] = useState(false);
-    const [selectedImage, setSelectedImage] = useState("");
+    const [selectedImage, setSelectedImage] = useState(
+        initialProduct?.images?.length ? initialProduct.images[0] : (initialProduct?.image || "")
+    );
     const [selectedMedia, setSelectedMedia] = useState("image");
     const [showShare, setShowShare] = useState(false);
 
