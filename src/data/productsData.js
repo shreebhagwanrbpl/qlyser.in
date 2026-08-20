@@ -115,8 +115,8 @@ export const featuredProductsData = [
     slug: "rapid-pathogen-test-strip",
     badge: "ISO Certified",
     description: "CE certified rapid cassette diagnostic test strips for fast, accurate infectious disease screening in clinical laboratories and hospitals.",
-    image: "/images/product-3.jpg",
-    images: ["/images/product-3.jpg"],
+    image: "/images/product-4.jpg",
+    images: ["/images/product-4.jpg"],
     specs: {
       "Result Time": "10-15 Mins",
       "Pack Size": "25 Tests/Kit",
