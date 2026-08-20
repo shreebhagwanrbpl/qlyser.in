@@ -5,6 +5,21 @@
 
 export const BASE_URL = "https://qlyser.in";
 
+/**
+ * Clean and normalize text into a safe URL slug (handles &, special chars, spaces)
+ */
+export function slugify(text = "") {
+  if (!text) return "";
+  return String(text)
+    .toLowerCase()
+    .trim()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-");
+}
+
+
 export const DEFAULT_ORGANIZATION = {
   name: "Raj Biosis Private Limited",
   legalName: "Raj Biosis Private Limited",

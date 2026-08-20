@@ -5,7 +5,8 @@ import {
   formatMetaDescription,
   generateProductSchema,
   generateBreadcrumbSchema,
-  BASE_URL
+  BASE_URL,
+  slugify
 } from "@/lib/seo-utils";
 import { notFound } from "next/navigation";
 
@@ -112,7 +113,7 @@ export default async function ProductPage({ params }) {
   const breadcrumbSchema = generateBreadcrumbSchema([
     { name: "Home", url: "/" },
     { name: "Products", url: "/products" },
-    { name: activeProduct.category || "Catalog", url: `/category/${(activeProduct.category || "all").toLowerCase().replace(/\s+/g, "-")}` },
+    { name: activeProduct.category || "Catalog", url: `/category/${slugify(activeProduct.category || "all")}` },
     { name: activeProduct.title, url: `/products/${activeProduct.slug}` },
   ]);
 

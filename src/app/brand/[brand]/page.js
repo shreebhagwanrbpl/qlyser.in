@@ -10,7 +10,8 @@ import {
   formatMetaDescription,
   generateBreadcrumbSchema,
   generateFAQSchema,
-  BASE_URL
+  BASE_URL,
+  slugify
 } from "@/lib/seo-utils";
 import { ShieldCheck, Award, Truck, HelpCircle } from "lucide-react";
 
@@ -20,7 +21,7 @@ export async function generateStaticParams() {
   try {
     const products = await fetchFullCatalog();
     const brands = new Set(
-      products.map((p) => p.brand?.toLowerCase().replace(/\s+/g, "-")).filter(Boolean)
+      products.map((p) => (p.brand ? slugify(p.brand) : "")).filter(Boolean)
     );
     return Array.from(brands).slice(0, 50).map((b) => ({ brand: b }));
   } catch (err) {
@@ -31,10 +32,15 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { brand } = await params;
   const products = await fetchFullCatalog();
+  const paramLower = brand.toLowerCase();
 
   const brandProducts = products.filter(
-    (p) => p.brand && p.brand.toLowerCase().replace(/\s+/g, "-") === brand.toLowerCase()
+    (p) => p.brand && (
+      slugify(p.brand) === paramLower ||
+      p.brand.toLowerCase().replace(/\s+/g, "-") === paramLower
+    )
   );
+
 
   const rawBrandName = brandProducts[0]?.brand || brand.replace(/-/g, " ");
   const brandName = rawBrandName.charAt(0).toUpperCase() + rawBrandName.slice(1);
@@ -71,10 +77,15 @@ export async function generateMetadata({ params }) {
 export default async function BrandPage({ params }) {
   const { brand } = await params;
   const products = await fetchFullCatalog();
+  const paramLower = brand.toLowerCase();
 
   const brandProducts = products.filter(
-    (p) => p.brand && p.brand.toLowerCase().replace(/\s+/g, "-") === brand.toLowerCase()
+    (p) => p.brand && (
+      slugify(p.brand) === paramLower ||
+      p.brand.toLowerCase().replace(/\s+/g, "-") === paramLower
+    )
   );
+
 
   if (brandProducts.length === 0) {
     // Partial match search
@@ -164,7 +175,7 @@ export default async function BrandPage({ params }) {
                 {categories.map((c) => (
                   <Link
                     key={c}
-                    href={`/category/${c.toLowerCase().replace(/\s+/g, "-")}`}
+                    href={`/category/${slugify(c)}`}
                     className="px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-sm font-semibold hover:border-amber-400 hover:text-amber-400 transition"
                   >
                     {c}

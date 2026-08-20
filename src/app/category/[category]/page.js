@@ -11,7 +11,8 @@ import {
   formatMetaDescription,
   generateBreadcrumbSchema,
   generateFAQSchema,
-  BASE_URL
+  BASE_URL,
+  slugify
 } from "@/lib/seo-utils";
 import { ShieldCheck, Truck, Wrench, HelpCircle } from "lucide-react";
 
@@ -21,7 +22,7 @@ export async function generateStaticParams() {
   try {
     const products = await fetchFullCatalog();
     const categories = new Set(
-      products.map((p) => p.category?.toLowerCase().replace(/\s+/g, "-")).filter(Boolean)
+      products.map((p) => p.category ? slugify(p.category) : "").filter(Boolean)
     );
     return Array.from(categories).slice(0, 50).map((cat) => ({ category: cat }));
   } catch (err) {
@@ -32,10 +33,15 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { category } = await params;
   const products = await fetchFullCatalog();
+  const paramLower = category.toLowerCase();
 
   const matchingProducts = products.filter(
-    (p) => p.category && p.category.toLowerCase().replace(/\s+/g, "-") === category.toLowerCase()
+    (p) => p.category && (
+      slugify(p.category) === paramLower ||
+      p.category.toLowerCase().replace(/\s+/g, "-") === paramLower
+    )
   );
+
 
   const rawCategoryName = matchingProducts[0]?.category || category.replace(/-/g, " ");
   const categoryName = rawCategoryName.charAt(0).toUpperCase() + rawCategoryName.slice(1);
@@ -72,10 +78,15 @@ export async function generateMetadata({ params }) {
 export default async function CategoryPage({ params }) {
   const { category } = await params;
   const products = await fetchFullCatalog();
+  const paramLower = category.toLowerCase();
 
   const categoryProducts = products.filter(
-    (p) => p.category && p.category.toLowerCase().replace(/\s+/g, "-") === category.toLowerCase()
+    (p) => p.category && (
+      slugify(p.category) === paramLower ||
+      p.category.toLowerCase().replace(/\s+/g, "-") === paramLower
+    )
   );
+
 
   if (categoryProducts.length === 0) {
     // Check if partial match exists
@@ -165,7 +176,7 @@ export default async function CategoryPage({ params }) {
                 {brands.map((b) => (
                   <Link
                     key={b}
-                    href={`/brand/${b.toLowerCase().replace(/\s+/g, "-")}`}
+                    href={`/brand/${slugify(b)}`}
                     className="px-3 py-1.5 rounded-full bg-slate-800 border border-slate-700 text-sm font-semibold hover:border-amber-400 hover:text-amber-400 transition"
                   >
                     {b}

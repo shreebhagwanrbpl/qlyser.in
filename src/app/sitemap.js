@@ -1,9 +1,14 @@
 import { fetchFullCatalog } from "@/lib/data-fetcher-server";
-import { BASE_URL, computePageSeoScore } from "@/lib/seo-utils";
+import { BASE_URL, computePageSeoScore, slugify } from "@/lib/seo-utils";
 import { db } from "@/lib/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
 export const revalidate = 3600;
+
+function escapeXmlUrl(urlStr) {
+  if (!urlStr) return "";
+  return urlStr.replace(/&(?!amp;|lt;|gt;|quot;|apos;)/g, "&amp;");
+}
 
 export default async function sitemap() {
   const urls = [];
@@ -11,11 +16,11 @@ export default async function sitemap() {
 
   // 1. Static Core Pages (High Priority)
   urls.push(
-    { url: BASE_URL, lastModified: now, changeFrequency: "daily", priority: 1.0 },
-    { url: `${BASE_URL}/products`, lastModified: now, changeFrequency: "daily", priority: 0.9 },
-    { url: `${BASE_URL}/about`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
-    { url: `${BASE_URL}/services`, lastModified: now, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${BASE_URL}/contact`, lastModified: now, changeFrequency: "monthly", priority: 0.8 }
+    { url: escapeXmlUrl(BASE_URL), lastModified: now, changeFrequency: "daily", priority: 1.0 },
+    { url: escapeXmlUrl(`${BASE_URL}/products`), lastModified: now, changeFrequency: "daily", priority: 0.9 },
+    { url: escapeXmlUrl(`${BASE_URL}/about`), lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    { url: escapeXmlUrl(`${BASE_URL}/services`), lastModified: now, changeFrequency: "weekly", priority: 0.8 },
+    { url: escapeXmlUrl(`${BASE_URL}/contact`), lastModified: now, changeFrequency: "monthly", priority: 0.8 }
   );
 
   try {
@@ -29,7 +34,8 @@ export default async function sitemap() {
     products.forEach((product) => {
       if (!product.slug) return;
 
-      const canonicalUrl = `${BASE_URL}/products/${product.slug}`;
+      const cleanProductSlug = slugify(product.slug);
+      const canonicalUrl = `${BASE_URL}/products/${cleanProductSlug}`;
       const score = computePageSeoScore({
         canonicalUrl,
         isIndexable: product.isPublished !== false,
@@ -43,7 +49,7 @@ export default async function sitemap() {
       // Quality Gate: Only include products scoring 50+
       if (score >= 50 && product.isPublished !== false) {
         urls.push({
-          url: canonicalUrl,
+          url: escapeXmlUrl(canonicalUrl),
           lastModified: now,
           changeFrequency: "weekly",
           priority: 0.9,
@@ -51,32 +57,36 @@ export default async function sitemap() {
       }
 
       if (product.category) {
-        categoriesSet.add(product.category.toLowerCase().replace(/\s+/g, "-"));
+        categoriesSet.add(slugify(product.category));
       }
 
       if (product.brand) {
-        brandsSet.add(product.brand.toLowerCase().replace(/\s+/g, "-"));
+        brandsSet.add(slugify(product.brand));
       }
     });
 
     // 3. Category Authority Pages
     categoriesSet.forEach((categorySlug) => {
-      urls.push({
-        url: `${BASE_URL}/category/${categorySlug}`,
-        lastModified: now,
-        changeFrequency: "weekly",
-        priority: 0.85,
-      });
+      if (categorySlug) {
+        urls.push({
+          url: escapeXmlUrl(`${BASE_URL}/category/${categorySlug}`),
+          lastModified: now,
+          changeFrequency: "weekly",
+          priority: 0.85,
+        });
+      }
     });
 
     // 4. Brand Authority Pages
     brandsSet.forEach((brandSlug) => {
-      urls.push({
-        url: `${BASE_URL}/brand/${brandSlug}`,
-        lastModified: now,
-        changeFrequency: "weekly",
-        priority: 0.85,
-      });
+      if (brandSlug) {
+        urls.push({
+          url: escapeXmlUrl(`${BASE_URL}/brand/${brandSlug}`),
+          lastModified: now,
+          changeFrequency: "weekly",
+          priority: 0.85,
+        });
+      }
     });
 
     // 5. Service Districts (Single Canonical URL per District)
@@ -87,10 +97,11 @@ export default async function sitemap() {
       if (!districtSnap.empty) {
         districtSnap.docs.forEach((docSnap) => {
           const data = docSnap.data();
-          const slug = data.slug || docSnap.id;
-          if (slug) {
+          const rawSlug = data.slug || docSnap.id;
+          if (rawSlug) {
+            const districtSlug = slugify(rawSlug);
             urls.push({
-              url: `${BASE_URL}/district/${slug}`,
+              url: escapeXmlUrl(`${BASE_URL}/district/${districtSlug}`),
               lastModified: now,
               changeFrequency: "monthly",
               priority: 0.75,

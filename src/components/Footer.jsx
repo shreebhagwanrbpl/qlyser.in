@@ -10,6 +10,7 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
+import { slugify } from "@/lib/seo-utils";
 
 export default function Footer() {
   const [contactInfo, setContactInfo] =
@@ -286,7 +287,7 @@ export default function Footer() {
 
             <div className="flex flex-col gap-3 text-slate-600">
               {categories.map((cat) => {
-                const catSlug = cat.replace(/\s+/g, "-").toLowerCase();
+                const catSlug = slugify(cat);
                 return (
                   <Link key={cat} href={`/category/${catSlug}`} className="hover:text-sky-700 transition">
                     {cat}
