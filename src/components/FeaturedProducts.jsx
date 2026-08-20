@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  featuredProductsData
-} from "@/data/productsData";
+import { featuredProductsData } from "@/data/productsData";
+import { fetchFullCatalog } from "@/lib/data-fetcher";
 import SectionTitle from "./SectionTitle";
 import {
   ArrowRight,
@@ -21,20 +20,55 @@ import {
 
 export default function FeaturedProducts({ city }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [productsList, setProductsList] = useState(featuredProductsData);
+
+  useEffect(() => {
+    let isMounted = true;
+    fetchFullCatalog()
+      .then((catalog) => {
+        if (isMounted && catalog && catalog.length > 0) {
+          const featuredFromCatalog = catalog.slice(0, 12).map((item) => ({
+            id: item.uid || item.slug || item.id,
+            title: item.title,
+            category: item.category || "Diagnostic Equipment",
+            subCategory: item.subCategory || "",
+            brand: item.brand || "Raj Biosis",
+            model: item.model || "",
+            slug: item.slug || "",
+            badge: item.badge || "Featured",
+            description: item.description || item.desc || "High-precision laboratory diagnostic equipment.",
+            image: item.image || (item.images?.length ? item.images[0] : ""),
+            images: item.images || (item.image ? [item.image] : []),
+            specs: item.specs || {
+              "Category": item.category || "Diagnostic",
+              "Brand": item.brand || "N/A"
+            },
+            features: item.features || ["High Diagnostic Accuracy", "Quality Certified"]
+          }));
+
+          if (featuredFromCatalog.length > 0) {
+            setProductsList(featuredFromCatalog);
+          }
+        }
+      })
+      .catch((err) => {
+        console.error("Error loading featured products from catalog:", err);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const categories = [
     "All",
-    "Diagnostic Equipment",
-    "Electrolyte Reagents",
-    "Hematology",
-    "Biochemistry",
-    "Rapid Diagnostic Kits",
+    ...Array.from(new Set(productsList.map((p) => p.category))).filter(Boolean)
   ];
 
   const filteredProducts =
     selectedCategory === "All"
-      ? featuredProductsData
-      : featuredProductsData.filter(
+      ? productsList
+      : productsList.filter(
           (p) => p.category === selectedCategory
         );
 
@@ -130,12 +164,30 @@ export default function FeaturedProducts({ city }) {
                   </div>
 
                   {/* Image Container Box */}
-                  <div className="relative flex h-52 w-full items-center justify-center overflow-hidden rounded-2xl border border-slate-100 bg-gradient-to-b from-slate-50 to-slate-100 p-6">
+                  <div className="relative flex h-52 w-full items-center justify-center overflow-hidden rounded-2xl border border-slate-100 bg-gradient-to-b from-slate-50 to-slate-100 p-4">
                     <div className="absolute inset-0 bg-blue-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                    <div className="relative z-10 flex flex-col items-center justify-center text-slate-700 group-hover:scale-105 transition-transform duration-500">
-                      <Microscope className="w-20 h-20 text-slate-800 transition-colors group-hover:text-blue-600" />
-                      <span className="mt-2 text-xs font-bold text-slate-600 uppercase tracking-widest">
-                        {product.brand} • {product.model}
+                    {product.image || product.images?.[0] ? (
+                      <img
+                        src={product.image || product.images?.[0]}
+                        alt={product.title || "Product"}
+                        loading="lazy"
+                        decoding="async"
+                        className="relative z-10 max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105"
+                        onError={(e) => {
+                          e.currentTarget.style.display = "none";
+                          if (e.currentTarget.nextElementSibling) {
+                            e.currentTarget.nextElementSibling.style.display = "flex";
+                          }
+                        }}
+                      />
+                    ) : null}
+                    <div
+                      className="relative z-10 flex flex-col items-center justify-center text-slate-700 transition-transform duration-500 group-hover:scale-105"
+                      style={{ display: (product.image || product.images?.[0]) ? "none" : "flex" }}
+                    >
+                      <Microscope className="w-16 h-16 text-slate-400 transition-colors group-hover:text-blue-600" />
+                      <span className="mt-2 text-xs font-bold text-slate-500 uppercase tracking-widest text-center px-2">
+                        {product.brand || "Diagnostic"} {product.model ? `• ${product.model}` : ""}
                       </span>
                     </div>
                   </div>
@@ -147,32 +199,36 @@ export default function FeaturedProducts({ city }) {
 
                   {/* Description */}
                   <p className="mt-3 text-sm text-slate-600 leading-relaxed line-clamp-3">
-                    {product.description}
+                    {product.description || product.desc || "High precision clinical lab diagnostic equipment."}
                   </p>
 
                   {/* Specs Table Pill */}
-                  <div className="mt-5 grid grid-cols-2 gap-2.5 rounded-2xl bg-slate-50 p-3.5 border border-slate-100 text-xs">
-                    {Object.entries(product.specs).map(([key, value]) => (
-                      <div key={key} className="overflow-hidden">
-                        <span className="block text-[11px] font-semibold uppercase tracking-wider text-slate-600">
-                          {key}
-                        </span>
-                        <span className="block font-bold text-slate-800 truncate mt-0.5">
-                          {value}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
+                  {product.specs && Object.keys(product.specs).length > 0 && (
+                    <div className="mt-5 grid grid-cols-2 gap-2.5 rounded-2xl bg-slate-50 p-3.5 border border-slate-100 text-xs">
+                      {Object.entries(product.specs).slice(0, 4).map(([key, value]) => (
+                        <div key={key} className="overflow-hidden">
+                          <span className="block text-[11px] font-semibold uppercase tracking-wider text-slate-600">
+                            {key}
+                          </span>
+                          <span className="block font-bold text-slate-800 truncate mt-0.5">
+                            {String(value)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
                   {/* Features Bullet List */}
-                  <div className="mt-4 space-y-1.5">
-                    {product.features.map((feat, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs font-medium text-slate-700">
-                        <CheckCircle2 size={15} className="text-teal-600 flex-shrink-0" />
-                        <span>{feat}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {product.features && Array.isArray(product.features) && product.features.length > 0 && (
+                    <div className="mt-4 space-y-1.5">
+                      {product.features.slice(0, 3).map((feat, i) => (
+                        <div key={i} className="flex items-center gap-2 text-xs font-medium text-slate-700">
+                          <CheckCircle2 size={15} className="text-teal-600 flex-shrink-0" />
+                          <span>{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Card Action Buttons */}
@@ -184,7 +240,7 @@ export default function FeaturedProducts({ city }) {
                     </button>
                   </Link>
 
-                  <Link href={makeLink(`/items`)}>
+                  <Link href={makeLink(product.slug ? `/items/${product.slug}` : `/items`)}>
                     <button className="flex h-12 items-center justify-center rounded-xl border border-slate-300 px-4 text-xs font-bold text-slate-700 transition-colors hover:bg-slate-100">
                       Catalog
                     </button>
