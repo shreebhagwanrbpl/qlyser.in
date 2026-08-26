@@ -46,35 +46,20 @@ export default function SeoContent({ city = "" }) {
                     <div className="space-y-7 text-lg leading-9 text-slate-600">
 
                         <p>
-                            Raj Biosis Private Limited is a trusted supplier of biomedical
-                            and laboratory equipment in <strong>{location}</strong>.
-                            We provide CBC Machines, Hematology Analyzers,
-                            Biochemistry Analyzers, Urine Analyzers,
-                            ELISA Readers and diagnostic instruments for
-                            hospitals, pathology labs and healthcare facilities.
+                            Raj Biosis Private Limited is a reliable supply partner for pathology laboratory machines and clinical testing tools in <strong>{location}</strong>.
+                            We help medical facilities acquire CBC blood cell counters, biochemistry testing analyzers, urine strip meters, ELISA microplate instruments, and essential diagnostic devices.
                         </p>
 
                         <p>
-                            Our mission is to provide reliable and high-quality
-                            laboratory equipment to healthcare professionals across
-                            India. We work with diagnostic centres, hospitals,
-                            research laboratories and medical institutions to
-                            deliver advanced biomedical solutions.
+                            Our main goal is to make healthcare diagnostics simpler and more reliable for local pathology labs, clinics, and hospital testing units across India. We believe accurate testing equipment forms the backbone of great patient care.
                         </p>
 
                         <p>
-                            We offer installation assistance, product guidance
-                            and technical support for a wide range of laboratory
-                            instruments. Whether you are setting up a new
-                            diagnostic laboratory or upgrading existing equipment,
-                            our team can help you select the right solution.
+                            Beyond supplying machinery, our trained technical team assists with machine calibration, staff operation training, and routine preventative servicing. Whether setting up a brand-new laboratory or replacing an older analyzer, we guide you to the right model for your workload.
                         </p>
 
                         <p>
-                            Raj Biosis Private Limited supplies equipment across
-                            multiple districts and cities, helping healthcare
-                            providers improve testing efficiency and
-                            diagnostic accuracy.
+                            With direct supply coverage across major towns and districts, Raj Biosis Private Limited ensures fast delivery of machinery, daily chemicals, and emergency repair services right to your doorstep.
                         </p>
 
                     </div>
@@ -87,34 +72,32 @@ export default function SeoContent({ city = "" }) {
 
                     <div className="inline-flex items-center gap-2 rounded-full border border-[#94A3B8]/30 bg-[#F8FAFC] px-5 py-2 text-sm font-semibold text-[#64748B]">
 
-                        Frequently Asked Questions
+                        Helpful Information
 
                     </div>
 
                     <h2 className="mt-6 text-4xl font-black text-[#1E293B]">
-
-                        Common Questions
-
+                        Frequently Asked Questions
                     </h2>
 
                     <div className="mt-10 grid gap-6">
 
                         {[
                             {
-                                q: "Do you supply biomedical equipment across India?",
-                                a: "Yes, we supply biomedical and laboratory equipment across multiple districts and cities."
+                                q: "How quickly can you deliver laboratory equipment to our facility?",
+                                a: "We ship standard analyzers and diagnostic supplies promptly, with delivery timelines depending on your specific district location."
                             },
                             {
-                                q: "Which laboratory instruments do you provide?",
-                                a: "We provide CBC Machines, Hematology Analyzers, Biochemistry Analyzers, ELISA Readers, Urine Analyzers and more."
+                                q: "What types of diagnostic instruments do you offer?",
+                                a: "We supply fully automated biochemistry machines, hematology cell counters, electrolyte meters, urine test analyzers, and high-purity diagnostic reagents."
                             },
                             {
-                                q: "Do you provide installation support?",
-                                a: "Yes, installation assistance and technical support are available depending on the equipment and location."
+                                q: "Does an engineer come to set up the machine?",
+                                a: "Yes, our biomedical engineer visits your laboratory to install the machine, calibrate all parameters, and train your staff on daily operations."
                             },
                             {
-                                q: "Who can purchase biomedical equipment?",
-                                a: "Hospitals, pathology labs, diagnostic centres, research laboratories and healthcare facilities."
+                                q: "Can small clinics or private diagnostic labs order from Raj Biosis?",
+                                a: "Absolutely. We work with independent pathology labs, doctor clinics, multi-specialty hospitals, and diagnostic testing networks of all sizes."
                             }
                         ].map((item, index) => (
 

@@ -14,27 +14,27 @@ export default function WhyChooseUs() {
   const features = [
     {
       icon: <Microscope size={30} />,
-      title: "Advanced Technology",
+      title: "Easy Machine Operation",
       description:
-        "Modern biomedical and diagnostic equipment for accurate healthcare solutions.",
+        "Simple, modern diagnostic tools that make routine lab testing quick and error-free.",
     },
     {
       icon: <ShieldCheck size={30} />,
-      title: "Trusted Quality",
+      title: "Tested & Certified",
       description:
-        "Reliable and certified diagnostic systems with premium quality standards.",
+        "Every analyzer and reagent batch undergoes multi-step quality checks before delivery.",
     },
     {
       icon: <HeartPulse size={30} />,
-      title: "Healthcare Focused",
+      title: "Focused on Patient Care",
       description:
-        "Delivering healthcare-driven biomedical solutions with precision and care.",
+        "Accurate sample readings so doctors and pathologists can diagnose patients with total confidence.",
     },
     {
       icon: <BadgeCheck size={30} />,
-      title: "Expert Support",
+      title: "Direct Engineer Support",
       description:
-        "Professional consultation and technical support for all medical needs.",
+        "Friendly technical experts available on-site and by phone whenever you need machine guidance.",
     },
   ];
 
@@ -63,9 +63,9 @@ export default function WhyChooseUs() {
         {/* Title */}
 
         <SectionTitle
-          badge="Why Choose Us"
-          title="Trusted Biomedical Excellence"
-          description="We deliver innovative diagnostic technologies and biomedical solutions with precision, trust and unmatched service quality."
+          badge="Why Partner With Us"
+          title="Simple, Honest & Reliable Service"
+          description="We make running a pathology laboratory easier by providing dependable machines, fresh daily supplies, and fast technician support."
           center
         />
 

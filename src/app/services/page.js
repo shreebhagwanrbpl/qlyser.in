@@ -72,8 +72,8 @@ export default function ServicesPage() {
     <>
       {/* Banner */}
       <PageBanner
-        title="Biomedical & Laboratory Services"
-        subtitle="Raj Biosis Private Limited delivers end-to-end equipment supply, engineering installation, pathology reagent cold-chain supply, and 24/7 AMC maintenance support."
+        title="Our Services & Technical Support"
+        subtitle="Raj Biosis Private Limited provides complete laboratory solutions — including machine setup, cold-chain chemical deliveries, and round-the-clock repair support."
       />
 
       {/* Services Grid Section */}
@@ -82,14 +82,7 @@ export default function ServicesPage() {
         <div className="absolute -top-32 left-1/2 -translate-x-1/2 h-[500px] w-[500px] rounded-full bg-blue-100/50 blur-[150px] pointer-events-none" />
 
         <div className="relative z-10 container-custom">
-          <SectionTitle
-            badge="What We Offer"
-            title="Comprehensive Biomedical Solutions"
-            description="Providing healthcare institutions and diagnostic centers with world-class machinery, emergency AMC repairs, and calibrated testing solutions."
-            center
-          />
-
-          <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
             {services.map((service, index) => (
               <div
                 key={service.id || index}
@@ -139,7 +132,7 @@ export default function ServicesPage() {
                 <div className="mt-8 pt-4">
                   <Link href="/contact">
                     <button className="flex w-full h-12 items-center justify-center gap-2 rounded-xl bg-slate-900 px-5 text-sm font-bold text-white transition hover:bg-blue-600 shadow-md">
-                      <span>Request Service Consultation</span>
+                      <span>Request Service Support</span>
                       <ArrowRight size={16} />
                     </button>
                   </Link>
@@ -154,9 +147,9 @@ export default function ServicesPage() {
       <section className="bg-slate-900 py-24 text-white relative overflow-hidden">
         <div className="container-custom relative z-10">
           <SectionTitle
-            badge="Our Service Commitments"
-            title="Guaranteed Quality & Zero Lab Downtime"
-            description="Raj Biosis Private Limited stands behind our biomedical equipment and maintenance contracts with strict SLAs."
+            badge="Our Guarantees"
+            title="Zero Lab Shutdowns & Reliable Support"
+            description="We back every machine sale and AMC maintenance plan with simple, reliable service commitments."
             center
             dark={true}
           />
@@ -165,18 +158,18 @@ export default function ServicesPage() {
             {[
               {
                 icon: <Clock className="w-10 h-10 text-amber-400" />,
-                title: "24-Hour Emergency Response",
-                desc: "Certified engineers dispatched within 24 hours for urgent equipment breakdowns to protect patient care timelines.",
+                title: "24-Hour Engineer Dispatch",
+                desc: "If your testing machine stops working, our engineer arrives on-site within 24 hours to get it running again.",
               },
               {
                 icon: <ShieldCheck className="w-10 h-10 text-teal-400" />,
-                title: "100% Factory Spare Parts",
-                desc: "We stock original replacement electrodes, valves, lamps, and pumps directly sourced from OEM manufacturers.",
+                title: "Original Factory Parts",
+                desc: "We replace worn electrodes, valves, lamps, and pumps with genuine factory components designed for your machine.",
               },
               {
                 icon: <Award className="w-10 h-10 text-cyan-400" />,
-                title: "NABL & ISO Compliance",
-                desc: "Standardized calibration protocols and traceable testing paperwork ensuring smooth NABL inspection audits.",
+                title: "NABL Ready Calibration",
+                desc: "Detailed calibration reports and standard testing records to help your laboratory clear NABL audit inspections effortlessly.",
               },
             ].map((g, i) => (
               <div key={i} className="rounded-3xl border border-slate-800 bg-slate-950 p-8 text-center shadow-xl">
@@ -195,9 +188,9 @@ export default function ServicesPage() {
       <section className="relative overflow-hidden bg-white py-24">
         <div className="container-custom">
           <SectionTitle
-            badge="How We Work"
-            title="Simple 3-Step Engagement Process"
-            description="Getting diagnostic equipment or technical AMC support for your lab is straightforward with Raj Biosis Private Limited."
+            badge="Simple Steps"
+            title="How to Get Started With Us"
+            description="Ordering laboratory equipment or booking technician AMC visits is fast and straightforward."
             center
           />
 
@@ -205,18 +198,18 @@ export default function ServicesPage() {
             {[
               {
                 step: "01",
-                title: "Consultation & Requirement Audit",
-                desc: "We analyze your daily test sample volumes, lab budget, and technical specs before recommending equipment.",
+                title: "Understand Your Lab Needs",
+                desc: "We look at your daily sample volume, testing requirements, and budget to suggest the ideal diagnostic machinery.",
               },
               {
                 step: "02",
-                title: "Installation & Calibration",
-                desc: "Certified engineers install machinery, perform standard calibration curves, and conduct hands-on staff training.",
+                title: "Installation & Staff Training",
+                desc: "Our engineer sets up the equipment, runs calibration tests, and provides easy hands-on training to your technicians.",
               },
               {
                 step: "03",
-                title: "Ongoing AMC & Reagent Assurance",
-                desc: "Routine preventative maintenance visits and seamless cold-chain reagent restocking to keep operations running smoothly.",
+                title: "Ongoing Maintenance & Reagents",
+                desc: "Enjoy routine preventative maintenance checkups and timely delivery of fresh reagents whenever stock runs low.",
               },
             ].map((item, index) => (
               <div

@@ -20,39 +20,39 @@ export default function AboutPage() {
   const pillars = [
     {
       icon: <ShieldCheck className="w-8 h-8 text-blue-500" />,
-      title: "Certified Excellence",
-      desc: "Every biomedical device, reagent, and diagnostic kit complies with ISO 13485 and international health standards.",
+      title: "Certified & Safe Equipment",
+      desc: "All our biochemistry meters, cell counters, and diagnostic reagents strictly comply with ISO quality standards.",
     },
     {
       icon: <Activity className="w-8 h-8 text-teal-400" />,
-      title: "Diagnostic Precision",
-      desc: "Our analyzers ensure repeatable, accurate results for routine and critical pathology testing.",
+      title: "Testing Accuracy",
+      desc: "Our diagnostic analyzers provide accurate, repeatable results so pathologists can deliver trustworthy patient reports.",
     },
     {
       icon: <Clock className="w-8 h-8 text-amber-400" />,
-      title: "24/7 AMC & Technical Support",
-      desc: "Dedicated service engineers provide rapid 24-hour on-site visits to prevent laboratory downtime.",
+      title: "24/7 Technician Visits",
+      desc: "Our dedicated service engineers respond quickly to on-site breakdown requests to prevent your lab from closing.",
     },
     {
       icon: <Users className="w-8 h-8 text-cyan-400" />,
-      title: "Nationwide Supply Network",
-      desc: "Fast, reliable cold-chain shipping ensuring reagents and consumables arrive at peak stability.",
+      title: "Direct Doorstep Logistics",
+      desc: "Fast, temperature-monitored cold-chain shipping ensures chemicals and test kits arrive in perfect condition.",
     },
   ];
 
   const milestones = [
-    { number: "10+", label: "Years Industry Leadership" },
-    { number: "500+", label: "Diagnostic Labs Serviced" },
-    { number: "10,000+", label: "Reagents Delivered" },
-    { number: "99.8%", label: "Lab Service Uptime" },
+    { number: "10+", label: "Years Supporting Pathology Labs" },
+    { number: "500+", label: "Active Diagnostic Partners" },
+    { number: "10,000+", label: "Reagent Packs Delivered" },
+    { number: "99.8%", label: "Lab Operational Uptime" },
   ];
 
   return (
     <>
       {/* Page Banner */}
       <PageBanner
-        title="About Raj Biosis Private Limited"
-        subtitle="Empowering healthcare institutions, pathology laboratories, and diagnostic centers with world-class biomedical systems and dedicated service support."
+        title="About Our Organization"
+        subtitle="Empowering hospitals, diagnostic centers, and local pathology labs across India with simple, accurate testing equipment and fast technician support."
       />
 
       {/* Main About Story Section */}
@@ -79,7 +79,7 @@ export default function AboutPage() {
             <div className="absolute -bottom-6 left-6 hidden rounded-2xl border border-slate-200 bg-slate-900 p-6 text-white shadow-2xl lg:block">
               <h3 className="text-4xl font-black text-amber-400">10+</h3>
               <p className="mt-1 text-xs font-bold text-slate-300 uppercase tracking-wider">
-                Years of Excellence
+                Years of Dedicated Support
               </p>
             </div>
 
@@ -94,25 +94,25 @@ export default function AboutPage() {
           <div>
             <SectionTitle
               badge="Who We Are"
-              title="Your Trusted Partner in Biomedical Technology"
-              description="Raj Biosis Private Limited is a premier provider of automated biochemistry analyzers, hematology instruments, electrolyte testing systems, and high-purity clinical reagents."
+              title="Your Dependable Healthcare Equipment Partner"
+              description="Raj Biosis Private Limited is a reliable provider of automated biochemistry machines, hematology blood counters, electrolyte devices, and daily clinical testing chemicals."
             />
 
             <p className="mt-6 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
-              For over a decade, Raj Biosis Private Limited has partnered with hospitals, diagnostic labs, and medical centers across India to supply state-of-the-art diagnostic machinery. Our focus is delivering reliable equipment backed by quick technical response and preventive maintenance.
+              For over a decade, Raj Biosis Private Limited has worked closely with hospitals, private pathology labs, and diagnostic centers across India. Our goal is simple: supply tested, accurate machines backed by immediate engineer response and routine maintenance.
             </p>
 
             <p className="mt-4 text-base sm:text-lg leading-relaxed text-slate-700 font-normal">
-              Whether setting up a new pathology lab or maintaining high-volume biochemistry testing, our team of trained biomedical engineers ensures maximum diagnostic precision and minimum downtime.
+              Whether you are opening a new pathology laboratory or replacing old instruments, our experienced biomedical engineers make sure your equipment runs smoothly with minimal downtime.
             </p>
 
             {/* Quick Checklist */}
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               {[
-                "Authorized Equipment Supplier",
+                "Tested Equipment Supply",
                 "Cold-Chain Reagent Delivery",
                 "Annual Maintenance Contracts (AMC)",
-                "NABL Standard Compliance",
+                "NABL Standard Support",
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2.5 text-sm font-bold text-slate-800">
                   <CheckCircle2 size={18} className="text-teal-600 flex-shrink-0" />
@@ -147,9 +147,9 @@ export default function AboutPage() {
         <div className="container-custom relative z-10">
           {/* Passed dark={true} to fix invisible text */}
           <SectionTitle
-            badge="Our Core Pillars"
-            title="Driven by Precision & Quality"
-            description="Our commitment to excellence guides everything we do, from equipment selection to technical AMC support."
+            badge="Our Core Promises"
+            title="Built on Quality & Fast Support"
+            description="Our focus is keeping your laboratory open, compliant, and accurate every single day."
             center
             dark={true}
           />

@@ -1,50 +1,51 @@
 export const defaultServicesData = [
   {
     id: "diagnostic-equipment",
-    badge: "Flagship Service",
+    badge: "Equipment Setup",
     title: "Diagnostic Equipment Supply & Installation",
-    desc: "End-to-end supply, delivery, and certified engineer installation of advanced biochemistry, hematology, and electrolyte testing instruments for pathology labs and hospitals.",
-    features: ["Authorized Brand Supply", "On-site Calibration", "Certified Engineers", "Warranty & Support"],
+    desc: "Complete supply, safe delivery, and engineer setup of biochemistry machines, hematology analyzers, and electrolyte testing instruments for pathology labs and hospitals.",
+    features: ["Genuine Tested Machines", "Free On-Site Calibration", "Expert Engineer Setup", "Full Warranty Support"],
     target: "Pathology Labs, Hospitals & Clinics"
   },
   {
     id: "laboratory-reagents",
-    badge: "Express Supply",
-    title: "Pathology Reagents & Consumables",
-    desc: "Timely delivery of high-purity clinical chemistry reagents, electrolyte fluids, control calibrators, and rapid test kits with temperature-monitored cold-chain shipping.",
-    features: ["Cold-Chain Logistics", "100% Genuine Reagents", "Bulk Discounting", "Regular Stock Assurance"],
-    target: "Diagnostic Centers & Blood Banks"
+    badge: "Fast Dispatch",
+    title: "Pathology Reagents & Daily Supplies",
+    desc: "Fast delivery of fresh testing chemicals, electrolyte fluids, quality controls, and rapid test kits stored and shipped under strict temperature-controlled cold chains.",
+    features: ["Cold-Chain Temperature Safety", "100% Pure Chemical Stock", "Fair Bulk Pricing", "Regular Supply Assurance"],
+    target: "Diagnostic Centers & Blood Testing Labs"
   },
   {
     id: "amc-maintenance",
-    badge: "24/7 Support",
+    badge: "24/7 Service",
     title: "Biomedical Equipment Maintenance & AMC",
-    desc: "Annual Maintenance Contracts (AMC/CMC), preventative servicing, emergency repair visits, and genuine spare part replacements to guarantee zero lab downtime.",
-    features: ["24-Hour Emergency Response", "Preventative Audits", "Original Spare Parts", "Loaner Equipment Support"],
+    desc: "Annual Maintenance Contracts (AMC/CMC), monthly preventative servicing, quick breakdown repair visits, and genuine factory spare parts to keep your lab open 24/7.",
+    features: ["Rapid Engineer On-Site Visit", "Monthly Preventative Checkups", "Original Factory Spare Parts", "Standby Backup Support"],
     target: "Hospitals & Medical Institutes"
   },
   {
     id: "lab-setup-consultation",
-    badge: "Turnkey Solution",
-    title: "Complete Lab Setup & Accreditation Consultation",
-    desc: "Expert technical guidance on setting up turnkey pathology and diagnostic laboratories, NABL accreditation compliance, airflow, and space layout optimization.",
-    features: ["NABL Standard Compliance", "Layout & Workflow Planning", "Equipment Selection", "Staff Operations Training"],
-    target: "New Labs & Expanding Centers"
+    badge: "New Lab Setup",
+    title: "Complete Laboratory Setup & Planning",
+    desc: "Step-by-step guidance for doctors and lab owners starting a new pathology laboratory, including room layout planning, equipment selection, and NABL standards guidance.",
+    features: ["NABL Guidance & Standards", "Smart Room Layout Planning", "Right Equipment Guidance", "Technician Hands-On Training"],
+    target: "New Labs & Expanding Diagnostics"
   },
   {
     id: "calibration-validation",
-    badge: "ISO Precision",
-    title: "Equipment Calibration & Quality Validation",
-    desc: "Rigorous quality assurance, standard curve calibration, and precision testing of clinical analyzer parameters adhering to strict ISO and national health standards.",
-    features: ["Traceable Standards", "Detailed Quality Reports", "Multi-parameter Verification", "Zero Drift Guarantee"],
-    target: "ISO & NABL Accredited Labs"
+    badge: "Accuracy Control",
+    title: "Machine Calibration & Quality Checks",
+    desc: "Detailed calibration checkups and multi-parameter testing for clinical machines to guarantee accurate sample readings and error-free patient reports every time.",
+    features: ["Certified Standard Checks", "Clear Quality Test Reports", "Sensor Parameter Calibration", "Zero Testing Errors"],
+    target: "Accredited Pathology Laboratories"
   },
   {
     id: "technical-training",
-    badge: "Skill Development",
-    title: "Lab Staff Technical Training & Support",
-    desc: "Hands-on operational training for laboratory technicians and pathologists on modern automated analyzers, software interfaces, and sample handling protocols.",
-    features: ["Hands-on Workshop", "Troubleshooting Guidance", "Maintenance Protocols", "Certification Provided"],
-    target: "Technicians & Lab Managers"
+    badge: "Staff Training",
+    title: "Lab Staff Training & Hands-On Workshop",
+    desc: "Simple, practical training sessions for lab technicians and staff to easily operate modern automated analyzers, handle samples safely, and run daily cleanups.",
+    features: ["Practical Daily Guidance", "Quick Error Fixing Steps", "Safe Sample Handling", "Staff Operations Certificate"],
+    target: "Lab Technicians & Staff Managers"
   }
 ];
+

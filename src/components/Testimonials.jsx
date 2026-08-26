@@ -7,21 +7,21 @@ export default function Testimonials() {
   const reviews = [
     {
       name: "Dr. Rajesh Kumar",
-      role: "Healthcare Specialist",
+      role: "Pathology Director",
       review:
-        "Raj Biosis Private Limited has consistently delivered reliable diagnostic equipment with outstanding support.",
+        "Raj Biosis provided our clinical lab with a biochemistry analyzer that has performed flawlessly. Their engineer arrived on time for setup and staff training.",
     },
     {
       name: "Amit Sharma",
-      role: "Lab Director",
+      role: "Diagnostic Lab Owner",
       review:
-        "Professional service, premium products, and excellent biomedical consultation experience.",
+        "The cold-chain reagent supply from Raj Biosis is extremely dependable. We never run out of testing packs, and the pricing is very reasonable.",
     },
     {
       name: "Neha Verma",
-      role: "Research Head",
+      role: "Chief Technologist",
       review:
-        "Their healthcare solutions improved our laboratory efficiency significantly.",
+        "Whenever we have a technical question or need a preventative checkup, their service team resolves it quickly. Highly recommend their AMC plans.",
     },
   ];
 
@@ -48,9 +48,9 @@ export default function Testimonials() {
       <div className="container-custom relative z-10">
 
         <SectionTitle
-          badge="Testimonials"
-          title="What Our Clients Say"
-          description="Trusted by healthcare professionals, laboratories and biomedical institutions across India."
+          badge="Real Feedback"
+          title="What Lab Owners & Pathologists Say"
+          description="Hear from healthcare professionals who rely on Raj Biosis for diagnostic equipment and daily supplies."
           center
         />
 

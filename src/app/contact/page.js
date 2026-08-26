@@ -239,8 +239,8 @@ export default function ContactPage() {
     <>
       {/* Banner */}
       <PageBanner
-        title="Contact Us"
-        subtitle="Get in touch with  Raj Biosis for premium diagnostic and biomedical solutions."
+        title="Get in Touch With Us"
+        subtitle="Have questions about diagnostic machines, chemical supplies, or machine repair? Contact Raj Biosis Private Limited today."
       />
 
       {/* Contact Section */}
@@ -251,18 +251,15 @@ export default function ContactPage() {
           <div>
 
             <span className="inline-block bg-sky-100 text-sky-700 px-5 py-2 rounded-full font-semibold mb-5">
-              Contact Information
+              Contact Details
             </span>
 
             <h2 className="section-title">
-              Let’s Start a Conversation
+              We Are Here to Help
             </h2>
 
             <p className="section-subtitle">
-              Reach out to us for
-              healthcare consultation,
-              biomedical products, and
-              advanced diagnostic support.
+              Reach out to us for machine price quotes, reagent orders, on-site setup, or emergency technician AMC support.
             </p>
 
             {/* Contact Cards */}
@@ -275,7 +272,7 @@ export default function ContactPage() {
 
                 <div>
                   <h4 className="font-semibold text-lg">
-                    Phone Number
+                    Direct Phone Line
                   </h4>
 
                   <div className="text-slate-600 mt-2 flex flex-col">
@@ -296,7 +293,7 @@ export default function ContactPage() {
 
                 <div>
                   <h4 className="font-semibold text-lg">
-                    Email Address
+                    Email Contact
                   </h4>
 
                   <p className="text-slate-600 mt-2">
@@ -314,7 +311,7 @@ export default function ContactPage() {
 
                 <div>
                   <h4 className="font-semibold text-lg">
-                    Office Address
+                    Office & Facility Location
                   </h4>
 
                   <p className="text-slate-600 mt-2">
@@ -330,7 +327,7 @@ export default function ContactPage() {
 
                 <div>
                   <h4 className="font-semibold text-lg">
-                    Working Hours
+                    Support Hours
                   </h4>
 
                   <p className="text-slate-600 mt-2">
@@ -346,12 +343,11 @@ export default function ContactPage() {
           <div className="bg-white rounded-[40px] p-8 lg:p-10 shadow-[0_20px_60px_rgba(0,0,0,0.08)]">
 
             <h3 className="text-3xl font-bold text-slate-900">
-              Send Us Message
+              Send Us a Quick Message
             </h3>
 
             <p className="text-slate-500 mt-3">
-              Fill out the form and our
-              team will contact you soon.
+              Fill in your details below and our technical support team will contact you shortly.
             </p>
 
             <form

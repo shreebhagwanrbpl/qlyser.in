@@ -15,27 +15,27 @@ export default function ServicesPreview() {
   const services = [
     {
       icon: <Microscope size={30} />,
-      title: "Diagnostic Equipment",
+      title: "Analyzer Setup & Supply",
       description:
-        "Advanced diagnostic systems designed for accurate and efficient healthcare testing.",
+        "Complete delivery and engineer installation of biochemistry and hematology machines.",
     },
     {
       icon: <FlaskConical size={30} />,
-      title: "Laboratory Solutions",
+      title: "Fresh Reagent Delivery",
       description:
-        "Reliable laboratory instruments and biomedical support for modern medical environments.",
+        "Strict cold-chain shipment of daily testing chemicals, calibrators, and diagnostic kits.",
     },
     {
       icon: <ShieldCheck size={30} />,
-      title: "Maintenance Support",
+      title: "24/7 AMC & Repairs",
       description:
-        "Professional technical support and maintenance for biomedical systems.",
+        "Fast technician visits, emergency breakdown repairs, and original spare part replacements.",
     },
     {
       icon: <Stethoscope size={30} />,
-      title: "Healthcare Consultation",
+      title: "New Lab Guidance",
       description:
-        "Expert guidance and consultation for healthcare and biomedical operations.",
+        "Practical advice on room layouts, instrument selection, and staff operational training.",
     },
   ];
 
@@ -66,9 +66,9 @@ export default function ServicesPreview() {
         {/* Section Title */}
 
         <SectionTitle
-          badge="Our Services"
-          title="Premium Diagnostic & Biomedical Services"
-          description="Providing advanced healthcare technologies, laboratory systems and trusted biomedical solutions for modern diagnostics."
+          badge="Complete Lab Care"
+          title="Services Built Around Your Lab Needs"
+          description="Everything required to keep your laboratory running smoothly, from equipment installation to daily reagent supply and fast machine maintenance."
           center
         />
 
