@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { useState, useEffect } from "react";
+import { fetchSiteDoc } from "@/lib/site-data-client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -12,10 +11,16 @@ import {
 } from "lucide-react";
 import { slugify } from "@/lib/seo-utils";
 
+const defaultContactInfo = [
+  { label: "Address", value: "F-4, 1st Floor, Plot No. 16, D-Block Tagor Nagar, Ajmer-Delhi Bypass Rd, Jaipur, Rajasthan 302021, India" },
+  { label: "Email", value: "mail@rajbiosis.com" },
+  { label: "Phone", value: ["8318368383"] },
+];
+
 export default function Footer() {
   const [contactInfo, setContactInfo] =
-    useState([]);
-  const [loading, setLoading] = useState(true);
+    useState(defaultContactInfo);
+  const [loading, setLoading] = useState(false);
   const [districtData, setDistrictData] =
     useState(null);
 
@@ -42,15 +47,7 @@ export default function Footer() {
   useEffect(() => {
     const loadContact = async () => {
       try {
-        const snap = await getDoc(
-          doc(
-            db,
-            "websites",
-            "qlyserin",
-            "pages",
-            "contact"
-          )
-        );
+        const snap = await fetchSiteDoc("contact");
 
         if (snap.exists()) {
           setContactInfo(
@@ -73,15 +70,7 @@ export default function Footer() {
       if (!district) return;
 
       try {
-        const snap = await getDoc(
-          doc(
-            db,
-            "websites",
-            "qlyserin",
-            "districts",
-            district
-          )
-        );
+        const snap = await fetchSiteDoc(`district:${district}`);
 
         if (snap.exists()) {
           setDistrictData(snap.data());
@@ -115,21 +104,25 @@ export default function Footer() {
     loadCategories();
   }, []);
 
+  const defaultAddress = "F-4, 1st Floor, Plot No. 16, D-Block Tagor Nagar, Ajmer-Delhi Bypass Rd, Jaipur, Rajasthan 302021, India";
+  const defaultPhone = ["8318368383"];
+  const defaultEmail = "mail@rajbiosis.com";
+
   const getContactField = (labels) => {
     const found = contactInfo.find(
       (x) => labels.some(l => x.label?.toLowerCase() === l.toLowerCase())
     );
-    return found ? found.value : "";
+    return (found && found.value) ? found.value : "";
   };
 
-  const phone = getContactField(["phone", "phone number", "mobile", "mobile number"]);
-  const email = getContactField(["email", "email address"]);
-  const address = getContactField(["address", "office address", "address/office address"]);
+  const phone = getContactField(["phone", "phone number", "mobile", "mobile number"]) || defaultPhone;
+  const email = getContactField(["email", "email address"]) || defaultEmail;
+  const address = getContactField(["address", "office address", "address/office address"]) || defaultAddress;
 
   const dynamicAddress =
-    districtData
+    (districtData?.district && districtData?.state)
       ? `${districtData.district}, ${districtData.state}, India`
-      : address;
+      : (districtData?.district ? `${districtData.district}, India` : address);
 
   let phoneValues = [];
   if (Array.isArray(phone)) {

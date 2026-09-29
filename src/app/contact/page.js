@@ -1,13 +1,8 @@
 "use client";
+
+import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import {
-  doc,
-  getDoc,
-  addDoc,
-  collection,
-} from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { fetchSiteDoc, submitQuery } from "@/lib/site-data-client";
 import toast from "react-hot-toast";
 import {
   Mail,
@@ -19,25 +14,46 @@ import {
 import PageBanner from "@/components/PageBanner";
 import CTASection from "@/components/CTASection";
 
-export default function ContactPage() {
-  const [loading, setLoading] = useState(true);
+const defaultContactInfo = [
+  { label: "Address", value: "F-4, 1st Floor, Plot No. 16, D-Block Tagor Nagar, Ajmer-Delhi Bypass Rd, Jaipur, Rajasthan 302021, India" },
+  { label: "Email", value: "mail@rajbiosis.com" },
+  { label: "Phone", value: ["8318368383"] },
+  { label: "Working Hours", value: "Mon - Sat (10AM - 6PM)" },
+];
+
+export default function ContactPage({ city = "" }) {
+  const [loading, setLoading] = useState(false);
   const [districtData, setDistrictData] =
     useState(null);
   const [contactInfo, setContactInfo] =
-    useState([]);
+    useState(defaultContactInfo);
 
   const [submitting, setSubmitting] =
     useState(false);
   const pathname = usePathname();
+
+  const staticRoutes = [
+    "about",
+    "services",
+    "products",
+    "contact",
+    "items",
+    "enquiry",
+    "brand",
+    "category",
+    "district",
+  ];
 
   const pathParts = pathname
     .split("/")
     .filter(Boolean);
 
   const currentDistrict =
-    pathParts.length > 0
-      ? pathParts[0]
-      : null;
+    city
+      ? city.toLowerCase().replace(/\s+/g, "-")
+      : (pathParts.length > 0 && !staticRoutes.includes(pathParts[0])
+        ? pathParts[0]
+        : null);
   const handleChange = (e) => {
     setForm({
       ...form,
@@ -80,17 +96,10 @@ export default function ContactPage() {
     try {
       setSubmitting(true);
 
-      await addDoc(
-        collection(
-          db,
-          "websitesQueries",
-          "qlyserin",
-          "contactQueries"
-        ),
-        {
-          ...form,
-          createdAt: new Date(),
-        }
+      await submitQuery("/api/contact-query", {
+        ...form,
+        createdAt: new Date().toISOString(),
+      }
       );
 
       toast.success(
@@ -125,15 +134,7 @@ export default function ContactPage() {
       if (!currentDistrict) return;
 
       try {
-        const snap = await getDoc(
-          doc(
-            db,
-            "websites",
-            "qlyserin",
-            "districts",
-            currentDistrict
-          )
-        );
+        const snap = await fetchSiteDoc(`district:${currentDistrict}`);
 
         if (snap.exists()) {
           setDistrictData(snap.data());
@@ -148,15 +149,7 @@ export default function ContactPage() {
   useEffect(() => {
     const loadContact = async () => {
       try {
-        const snap = await getDoc(
-          doc(
-            db,
-            "websites",
-            "qlyserin",
-            "pages",
-            "contact"
-          )
-        );
+        const snap = await fetchSiteDoc("contact");
 
         if (snap.exists()) {
           setContactInfo(
@@ -175,22 +168,29 @@ export default function ContactPage() {
 
 
 
+  const defaultAddress = "F-4, 1st Floor, Plot No. 16, D-Block Tagor Nagar, Ajmer-Delhi Bypass Rd, Jaipur, Rajasthan 302021, India";
+  const defaultPhone = ["8318368383"];
+  const defaultEmail = "mail@rajbiosis.com";
+  const defaultHours = "Mon - Sat (10AM - 6PM)";
+
   const getContactField = (labels) => {
     const found = contactInfo.find(
       (x) => labels.some(l => x.label?.toLowerCase() === l.toLowerCase())
     );
-    return found ? found.value : "";
+    return (found && found.value) ? found.value : "";
   };
 
-  const phone = getContactField(["phone", "phone number", "mobile", "mobile number"]);
-  const email = getContactField(["email", "email address"]);
-  const address = getContactField(["address", "office address", "address/office address"]);
-  const hours = getContactField(["working hours", "hours", "work hours"]);
+  const phone = getContactField(["phone", "phone number", "mobile", "mobile number"]) || defaultPhone;
+  const email = getContactField(["email", "email address"]) || defaultEmail;
+  const address = getContactField(["address", "office address", "address/office address"]) || defaultAddress;
+  const hours = getContactField(["working hours", "hours", "work hours"]) || defaultHours;
 
   const dynamicAddress =
-    districtData
-      ? `${districtData.district}, ${districtData.state}, India`
-      : address;
+    city
+      ? `${city}, Rajasthan, India`
+      : ((districtData?.district && districtData?.state)
+        ? `${districtData.district}, ${districtData.state}, India`
+        : (districtData?.district ? `${districtData.district}, India` : address));
 
   let phoneValues = [];
   if (Array.isArray(phone)) {
@@ -200,7 +200,7 @@ export default function ContactPage() {
   }
 
   const mapAddress = encodeURIComponent(
-    dynamicAddress
+    dynamicAddress || defaultAddress
   );
   if (loading) {
     return (
@@ -385,15 +385,6 @@ export default function ContactPage() {
                     phone: e.target.value.replace(/\D/g, ""),
                   })
                 }
-                className="w-full border border-slate-200 rounded-2xl px-5 py-4 outline-none focus:border-sky-600"
-              />
-
-              <input
-                type="text"
-                name="subject"
-                placeholder="Subject"
-                value={form.subject}
-                onChange={handleChange}
                 className="w-full border border-slate-200 rounded-2xl px-5 py-4 outline-none focus:border-sky-600"
               />
 

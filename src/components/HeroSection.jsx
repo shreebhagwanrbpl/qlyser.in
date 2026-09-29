@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { fetchSiteDoc } from "@/lib/site-data-client";
+
+
 import {
   ShieldCheck,
   Microscope,
@@ -38,9 +39,7 @@ export default function HeroSection({ city }) {
   useEffect(() => {
     const fetchHeroData = async () => {
       try {
-        const snap = await getDoc(
-          doc(db, "websites", "centralbiomedicals", "pages", "home")
-        );
+        const snap = await fetchSiteDoc("home");
         if (snap.exists() && snap.data()?.title) {
           setDbHero(snap.data());
         }
@@ -64,9 +63,9 @@ export default function HeroSection({ city }) {
         "Fast on-site calibration by trained engineers",
         "Trusted supply network across India",
       ],
-      primaryBtnText: dbHero?.button1Text || "View Lab Equipment",
+      primaryBtnText: dbHero?.button1Text || "",
       primaryBtnLink: makeLink("/items"),
-      secondaryBtnText: dbHero?.button2Text || "Get Price Quote",
+      secondaryBtnText: dbHero?.button2Text || "",
       secondaryBtnLink: makeLink("/contact"),
       gradientBg: "from-slate-950 via-slate-900 to-slate-950",
       accentGlow: "bg-cyan-500/20",

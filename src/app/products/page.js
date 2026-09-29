@@ -7,7 +7,8 @@ import {
   BASE_URL
 } from "@/lib/seo-utils";
 
-export const revalidate = 3600; // Cache revalidation every hour
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function generateMetadata() {
   const title = formatSeoTitle("Biomedical & Laboratory Equipment Catalog", "product");

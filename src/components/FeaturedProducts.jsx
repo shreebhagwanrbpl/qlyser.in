@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { featuredProductsData } from "@/data/productsData";
 import { fetchFullCatalog } from "@/lib/data-fetcher";
 import SectionTitle from "./SectionTitle";
 import {
@@ -20,7 +19,7 @@ import {
 
 export default function FeaturedProducts({ city }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [productsList, setProductsList] = useState(featuredProductsData);
+  const [productsList, setProductsList] = useState([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -128,7 +127,7 @@ export default function FeaturedProducts({ city }) {
                 }`}
               >
                 <span className={isActive ? "text-cyan-400" : "text-slate-500"}>
-                  {categoryIcons[cat]}
+                  {categoryIcons[cat] || <Layers size={16} />}
                 </span>
                 <span>{cat}</span>
               </button>

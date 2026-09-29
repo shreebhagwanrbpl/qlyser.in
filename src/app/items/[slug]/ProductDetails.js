@@ -1,30 +1,14 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import toast from "react-hot-toast";
-
-import { usePathname } from "next/navigation";
-
-import {
-    FaPlay,
-    FaShareAlt,
-    FaWhatsapp,
-    FaFacebook,
-    FaInstagram,
-    FaLink,
-} from "react-icons/fa";
-
-import {
-    doc,
-    getDoc,
-    getDocs,
-    addDoc,
-    collection,
-} from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { extractPhones, extractEmails } from "@/lib/contact-utils";
+import { fetchSiteDoc, submitQuery } from "@/lib/site-data-client";
 import { fetchFullCatalog } from "@/lib/data-fetcher";
 import { Download } from "lucide-react";
+import { FaPlay, FaShareAlt, FaLink, FaWhatsapp, FaFacebook, FaInstagram } from "react-icons/fa";
 const makeSlug = (text = "") =>
     text
         .toLowerCase()
@@ -50,12 +34,15 @@ export default function ProductDetails({ slug, initialProduct = null }) {
 
     const [submitting, setSubmitting] =
         useState(false);
+    const [contactInfo, setContactInfo] = useState([]);
+    const contactPhones = extractPhones(contactInfo);
+    const contactEmails = extractEmails(contactInfo);
     const [downloading, setDownloading] = useState(false);
     const [brochureImage, setBrochureImage] = useState("");
     const [contactData, setContactData] = useState({
-        phone: "+91 9983123469\n+91 9983333489",
-        email: "rajbiosis@yahoo.in",
-        address: "F-4, 1st Floor, Plot No. 16, D-Block Tagor Nagar, on Ajmer-Delhi, 200 Feet Bypass Rd, Jaipur, Rajasthan 302021"
+        phone: "",
+        email: "",
+        address: ""
     });
 
     const pathname = usePathname();
@@ -97,19 +84,28 @@ export default function ProductDetails({ slug, initialProduct = null }) {
 
         const loadContact = async () => {
             try {
-                const snap = await getDoc(
-                    doc(db, "websites", "qlyserin", "pages", "contact")
-                );
+                const defaultContact = {
+                    phone: "8318368383",
+                    email: "mail@rajbiosis.com",
+                    address: "F-4, 1st Floor, Plot No. 16, D-Block Tagor Nagar, Ajmer-Delhi Bypass Rd, Jaipur, Rajasthan 302021, India"
+                };
+                const snap = await fetchSiteDoc("contact");
                 if (snap.exists()) {
                     const info = snap.data().contactInfo || [];
-                    const phoneVal = info.find(x => x.label === "Phone Number")?.value || "";
-                    const emailVal = info.find(x => x.label === "Email Address")?.value || "";
-                    const addressVal = info.find(x => x.label === "Office Address")?.value || "";
+                    const getField = (labels) => {
+                        const found = info.find(x => labels.some(l => x.label?.toLowerCase() === l.toLowerCase()));
+                        return (found && found.value) ? (Array.isArray(found.value) ? found.value.join(", ") : String(found.value)) : "";
+                    };
+                    const phoneVal = getField(["phone", "phone number", "mobile", "mobile number"]);
+                    const emailVal = getField(["email", "email address"]);
+                    const addressVal = getField(["address", "office address"]);
                     setContactData({
-                        phone: phoneVal || "+91 9983123469\n+91 9983333489",
-                        email: emailVal || "rajbiosis@yahoo.in",
-                        address: addressVal || "F-4, 1st Floor, Plot No. 16, D-Block Tagor Nagar, on Ajmer-Delhi, 200 Feet Bypass Rd, Jaipur, Rajasthan 302021"
+                        phone: phoneVal || defaultContact.phone,
+                        email: emailVal || defaultContact.email,
+                        address: addressVal || defaultContact.address
                     });
+                } else {
+                    setContactData(defaultContact);
                 }
             } catch (err) {
                 console.error("Error loading contact details:", err);
@@ -229,20 +225,13 @@ export default function ProductDetails({ slug, initialProduct = null }) {
         try {
             setSubmitting(true);
 
-            await addDoc(
-                collection(
-                    db,
-                    "websitesQueries",
-                    "qlyserin",
-                    "productQueries"
-                ),
-                {
+            await submitQuery("/api/product-query", {
                     ...form,
                     productName: product.title,
                     productSlug: product.slug,
                     brand: product.brand || "",
                     model: product.model || "",
-                    createdAt: new Date(),
+                    createdAt: new Date().toISOString(),
                 }
             );
 
@@ -320,7 +309,7 @@ ${product?.desc}
 🌐 ${window.location.href}`;
 
         window.open(
-            `https://wa.me/?text=${encodeURIComponent(shareText)}`,
+            `https://wa.me/${(contactPhones[0] || "").replace(/\D/g, "")}?text=${encodeURIComponent(shareText)}`,
             "_blank"
         );
     };

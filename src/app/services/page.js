@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { doc, getDoc } from "firebase/firestore";
-import { db } from "@/lib/firebase";
+import { fetchSiteDoc } from "@/lib/site-data-client";
+
 import { defaultServicesData } from "@/data/servicesData";
 import PageBanner from "@/components/PageBanner";
 import SectionTitle from "@/components/SectionTitle";
@@ -38,9 +38,7 @@ export default function ServicesPage() {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const snap = await getDoc(
-          doc(db, "websites", "rajbiosis", "pages", "services")
-        );
+        const snap = await fetchSiteDoc("services");
 
         if (snap.exists() && snap.data()?.services?.length > 0) {
           const dbServices = snap.data().services.map((item, index) => ({

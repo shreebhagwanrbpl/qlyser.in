@@ -15,7 +15,6 @@ import {
 import { Toaster, toast } from "react-hot-toast";
 import PageBanner from "@/components/PageBanner";
 import SectionTitle from "@/components/SectionTitle";
-// import CTASection from "@/components/CTASection";
 import ProductCard from "@/components/ProductCard";
 
 // 1. Memoized Product Link Component
@@ -147,6 +146,8 @@ const CategoryItem = memo(function CategoryItem({
 });
 
 export default function ProductsClient({ initialProducts = [], district = null, city = null }) {
+  const products = Array.isArray(initialProducts) ? initialProducts : [];
+
   const [categorySearch, setCategorySearch] = useState("");
   const [searchInput, setSearchInput] = useState("");
   const [productSearch, setProductSearch] = useState("");
@@ -169,7 +170,7 @@ export default function ProductsClient({ initialProducts = [], district = null, 
     const start = performance.now();
     const query = productSearch.trim().toLowerCase();
     const filtered = query
-      ? initialProducts.filter((item) => {
+      ? products.filter((item) => {
         const title = (item.title || "").toLowerCase();
         const brand = (item.brand || "").toLowerCase();
         const model = (item.model || "").toLowerCase();
@@ -184,7 +185,7 @@ export default function ProductsClient({ initialProducts = [], district = null, 
           subCategory.includes(query)
         );
       })
-      : initialProducts;
+      : products;
 
     const grouped = {};
     const counts = {};
@@ -255,7 +256,7 @@ export default function ProductsClient({ initialProducts = [], district = null, 
     setPendingScroll(slug);
 
     // Auto-expand the target subcategory when scrolling to its product
-    const prod = initialProducts.find((p) => p.slug === slug);
+    const prod = products.find((p) => p.slug === slug);
     if (prod && prod.subCategory) {
       const subKey = `${category}-${prod.subCategory}`;
       setOpenedSubCategories((prev) => ({
@@ -263,7 +264,7 @@ export default function ProductsClient({ initialProducts = [], district = null, 
         [subKey]: true,
       }));
     }
-  }, [initialProducts]);
+  }, [products]);
 
   // Scroll to selected sidebar item when category expansion finishes
   useEffect(() => {
@@ -317,11 +318,7 @@ export default function ProductsClient({ initialProducts = [], district = null, 
 
   return (
     <Profiler id="ProductsLayout" onRender={onRenderCallback}>
-      {/* Banner */}
-      <PageBanner
-        title={city ? `Our Products in ${city}` : "Our Products"}
-        subtitle="Explore advanced biomedical and diagnostic equipment designed for modern healthcare excellence."
-      />
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -578,7 +575,7 @@ export default function ProductsClient({ initialProducts = [], district = null, 
       {showTopButton && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full bg-[#64748B] text-white shadow-2xl hover:bg-[#FFF3BF] hover:scale-110 transition flex items-center justify-center"
+          className="fixed bottom-8 right-8 z-50 w-14 h-14 rounded-full bg-[#64748B] text-white shadow-2xl hover:bg-[#FFF3BF] hover:text-[#64748B] hover:scale-110 transition flex items-center justify-center"
         >
           <ChevronUp size={24} />
         </button>
