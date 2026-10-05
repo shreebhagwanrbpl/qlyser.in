@@ -1,30 +1,20 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { fetchSiteDoc } from "@/lib/site-data-client";
-
-
 import {
   ShieldCheck,
   Microscope,
-  BadgeCheck,
-  ChevronLeft,
-  ChevronRight,
   ArrowRight,
   Sparkles,
-  Award,
-  Activity,
-  FlaskConical,
   PhoneCall,
-  Clock,
   CheckCircle2,
+  BadgeCheck,
 } from "lucide-react";
 
 export default function HeroSection({ city }) {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const [dbHero, setDbHero] = useState(null);
 
   // District Routing
@@ -32,15 +22,18 @@ export default function HeroSection({ city }) {
     ? city.toLowerCase().replace(/\s+/g, "-")
     : "";
 
-  const makeLink = (path) => {
-    return districtSlug ? `/${districtSlug}${path}` : path;
+  const makeLink = (path = "/") => {
+    if (!path) return "/";
+    const cleanPath = path.startsWith("/") ? path : `/${path}`;
+    return districtSlug ? `/${districtSlug}${cleanPath}` : cleanPath;
   };
 
   useEffect(() => {
+    let isMounted = true;
     const fetchHeroData = async () => {
       try {
         const snap = await fetchSiteDoc("home");
-        if (snap.exists() && snap.data()?.title) {
+        if (isMounted && snap.exists()) {
           setDbHero(snap.data());
         }
       } catch (error) {
@@ -49,286 +42,160 @@ export default function HeroSection({ city }) {
     };
 
     fetchHeroData();
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const slides = [
-    {
-      id: 1,
-      badge: "✨ Reliable Healthcare Equipment",
-      badgeIcon: <Sparkles size={16} className="text-amber-400 animate-pulse" />,
-      title: dbHero?.title || "Dependable Diagnostic Machines & Laboratory Solutions",
-      subtitle: dbHero?.description || "Equip your pathology lab and clinic with high-accuracy biochemistry analyzers, hematology counters, and testing instruments built for fast, simple daily operation.",
-      highlights: [
-        "Simple to operate with zero testing errors",
-        "Fast on-site calibration by trained engineers",
-        "Trusted supply network across India",
-      ],
-      primaryBtnText: dbHero?.button1Text || "",
-      primaryBtnLink: makeLink("/items"),
-      secondaryBtnText: dbHero?.button2Text || "",
-      secondaryBtnLink: makeLink("/contact"),
-      gradientBg: "from-slate-950 via-slate-900 to-slate-950",
-      accentGlow: "bg-cyan-500/20",
-      glowPosition: "-top-32 left-1/4",
-      cardBadge: "Proven Systems",
-      stats: [
-        { label: "Report Precision", val: "99.9%" },
-        { label: "Active Lab Partners", val: "500+" },
-      ],
-      visualIcon: <Microscope className="w-24 h-24 text-cyan-400/90" />
-    },
-    {
-      id: 2,
-      badge: "🧪 Fresh Laboratory Reagents & Kits",
-      badgeIcon: <FlaskConical size={16} className="text-emerald-400" />,
-      title: "Fresh Testing Chemicals & Instant Diagnostic Test Kits",
-      subtitle: "Keep your daily lab testing uninterrupted with pure biochemistry reagents, electrolyte fluids, and rapid test kits delivered with strict temperature safety.",
-      highlights: [
-        "Compatible with major analyzer brands",
-        "Guaranteed cold-chain storage & delivery",
-        "Ready stock for fast doorstep dispatch",
-      ],
-      primaryBtnText: "Explore Reagents",
-      primaryBtnLink: makeLink("/items"),
-      secondaryBtnText: "Order Bulk Supplies",
-      secondaryBtnLink: makeLink("/contact"),
-      gradientBg: "from-slate-950 via-blue-950 to-slate-900",
-      accentGlow: "bg-emerald-500/20",
-      glowPosition: "bottom-0 right-1/4",
-      cardBadge: "Quality Inspected",
-      stats: [
-        { label: "Reagents Delivered", val: "10,000+" },
-        { label: "Quality Standard", val: "ISO Certified" },
-      ],
-      visualIcon: <Activity className="w-24 h-24 text-emerald-400/90" />
-    },
-    {
-      id: 3,
-      badge: "🛠️ 24/7 Technician Support & AMC",
-      badgeIcon: <Clock size={16} className="text-amber-400" />,
-      title: "Round-the-Clock Machine Repair & Yearly Maintenance",
-      subtitle: "Prevent breakdown delays in patient testing. Our trained biomedical engineers provide quick visits, monthly preventative servicing, and genuine replacement parts.",
-      highlights: [
-        "Quick engineer visit when you call",
-        "Monthly preventative machine checkups",
-        "Original factory spare parts in stock",
-      ],
-      primaryBtnText: "View AMC Plans",
-      primaryBtnLink: makeLink("/services"),
-      secondaryBtnText: "Call Repair Engineer",
-      secondaryBtnLink: makeLink("/contact"),
-      gradientBg: "from-slate-950 via-slate-900 to-indigo-950",
-      accentGlow: "bg-amber-500/20",
-      glowPosition: "top-1/4 right-10",
-      cardBadge: "Always Ready",
-      stats: [
-        { label: "Years Experience", val: "10+ Years" },
-        { label: "Machine Uptime", val: "99.8%" },
-      ],
-      visualIcon: <Award className="w-24 h-24 text-amber-400/90" />
-    },
-  ];
+  // Dynamic values without fallback text
+  const title = dbHero?.title || dbHero?.heroTitle || "";
+  const description = dbHero?.description || dbHero?.heroDescription || dbHero?.subtitle || "";
+  const button1Text = dbHero?.button1Text || dbHero?.btn1Text || dbHero?.primaryBtnText || "";
+  const button2Text = dbHero?.button2Text || dbHero?.btn2Text || dbHero?.secondaryBtnText || "";
 
-  const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
-  }, [slides.length]);
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
-  };
-
-  useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(() => {
-      nextSlide();
-    }, 6000);
-    return () => clearInterval(timer);
-  }, [nextSlide, isPaused]);
-
-  const slide = slides[currentSlide];
+  // Dynamic Button Links (respecting district routing)
+  const button1Link = makeLink(dbHero?.button1Link || dbHero?.btn1Link || "/items");
+  const button2Link = makeLink(dbHero?.button2Link || dbHero?.btn2Link || "/contact");
 
   return (
-    <section 
-      className="relative min-h-[92vh] flex items-center justify-center overflow-hidden bg-slate-950 text-white py-20 lg:py-24"
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-    >
-      {/* Background Dynamic Gradients */}
-      <div className="absolute inset-0 bg-slate-950">
-        <div className={`absolute inset-0 bg-gradient-to-br ${slide.gradientBg} transition-all duration-1000`} />
-        
-        {/* Glow Spheres */}
-        <div className={`absolute ${slide.glowPosition} h-[550px] w-[550px] rounded-full ${slide.accentGlow} blur-[140px] transition-all duration-1000`} />
-        <div className="absolute top-1/2 -left-40 h-[450px] w-[450px] rounded-full bg-blue-600/15 blur-[150px]" />
-        
-        {/* Grid pattern overlay */}
+    <section className="relative overflow-hidden bg-slate-950 text-white py-10 sm:py-12 lg:py-14 border-b border-slate-800/80">
+      {/* Background Subtle Gradients & Grid */}
+      <div className="absolute inset-0 bg-slate-950 pointer-events-none">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950" />
+        <div className="absolute top-0 left-1/4 h-72 w-72 rounded-full bg-cyan-500/10 blur-[100px]" />
+        <div className="absolute bottom-0 right-1/4 h-64 w-64 rounded-full bg-blue-600/10 blur-[90px]" />
         <div
-          className="absolute inset-0 opacity-[0.07]"
+          className="absolute inset-0 opacity-[0.05]"
           style={{
             backgroundImage:
               "linear-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.15) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
+            backgroundSize: "32px 32px",
           }}
         />
       </div>
 
-      <div className="container-custom relative z-10 w-full">
-        <AnimatePresence mode="wait">
+      <div className="container-custom relative z-10">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+          {/* Left Content Column (7 cols) */}
           <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -30 }}
-            transition={{ duration: 0.65, ease: "easeOut" }}
-            className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center"
+            transition={{ duration: 0.45, ease: "easeOut" }}
+            className="lg:col-span-7 flex flex-col items-start text-left"
           >
-            {/* Left Content Column (7 cols) */}
-            <div className="lg:col-span-7 flex flex-col items-start text-left">
-              {/* Badge Header */}
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-slate-700/80 bg-slate-900/90 px-5 py-2 text-sm font-semibold text-slate-200 shadow-xl backdrop-blur-md">
-                {slide.badgeIcon}
-                <span>{slide.badge}</span>
-                {city && (
-                  <span className="ml-1 pl-2 border-l border-slate-700 text-amber-300 font-bold">
-                    Serving {city}
-                  </span>
-                )}
-              </div>
-
-              {/* Slide Title */}
-              <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-[1.12]">
-                {slide.title}
-              </h1>
-
-              {/* Subtitle */}
-              <p className="mt-6 text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl font-normal">
-                {slide.subtitle}
-              </p>
-
-              {/* Highlights Checklist */}
-              <div className="mt-8 flex flex-wrap gap-y-3 gap-x-6">
-                {slide.highlights.map((item, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-sm font-medium text-slate-200">
-                    <CheckCircle2 size={18} className="text-emerald-400 flex-shrink-0" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Action Buttons */}
-              <div className="mt-10 flex flex-wrap items-center gap-4">
-                <Link href={slide.primaryBtnLink}>
-                  <button className="group flex h-14 items-center gap-3 rounded-2xl bg-gradient-to-r from-blue-600 via-teal-500 to-cyan-500 px-8 font-bold text-white shadow-[0_0_30px_rgba(14,165,233,0.4)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_40px_rgba(14,165,233,0.6)]">
-                    <span>{slide.primaryBtnText}</span>
-                    <ArrowRight size={19} className="transition group-hover:translate-x-1.5" />
-                  </button>
-                </Link>
-
-                <Link href={slide.secondaryBtnLink}>
-                  <button className="flex h-14 items-center gap-2.5 rounded-2xl border border-slate-700 bg-slate-900/80 px-7 font-bold text-slate-100 transition-all duration-300 hover:border-amber-400/60 hover:bg-slate-800 hover:text-white">
-                    <PhoneCall size={18} className="text-amber-400" />
-                    <span>{slide.secondaryBtnText}</span>
-                  </button>
-                </Link>
-              </div>
+            {/* Badge Header */}
+            <div className="inline-flex items-center gap-2 rounded-full border border-slate-700/80 bg-slate-900/90 px-4 py-1.5 text-xs font-semibold text-slate-200 shadow-md backdrop-blur-md">
+              <Sparkles size={14} className="text-amber-400" />
+              <span>{dbHero?.badge || "Biomedical & Diagnostic Solutions"}</span>
+              {city && (
+                <span className="ml-1 pl-2 border-l border-slate-700 text-amber-300 font-bold">
+                  Serving {city}
+                </span>
+              )}
             </div>
 
-            {/* Right Card / Visual Showcase (5 cols) */}
-            <div className="lg:col-span-5 relative flex justify-center lg:justify-end">
-              {/* Main Visual Frame */}
-              <div className="relative w-full max-w-md rounded-3xl border border-slate-700/60 bg-slate-900/80 p-8 backdrop-blur-xl shadow-2xl shadow-slate-950/80">
-                {/* Decorative Top Accent */}
-                <div className="absolute top-0 left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent" />
-                
-                {/* Floating Badge */}
-                <div className="inline-flex items-center gap-2 rounded-xl bg-slate-800/90 px-4 py-1.5 text-xs font-bold text-amber-300 border border-slate-700 mb-6">
-                  <ShieldCheck size={14} className="text-amber-400" />
-                  {slide.cardBadge}
-                </div>
+            {/* Dynamic Title (no fallback text) */}
+            {title && (
+              <h1 className="mt-4 text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white leading-tight">
+                {title}
+              </h1>
+            )}
 
-                {/* Central Icon Illustration Box */}
-                <div className="relative h-48 w-full rounded-2xl border border-slate-800 bg-gradient-to-b from-slate-950 to-slate-900/90 flex flex-col items-center justify-center p-6 shadow-inner overflow-hidden">
-                  <div className="absolute inset-0 bg-cyan-500/5 blur-xl" />
-                  <div className="relative z-10 transition duration-500 hover:scale-110">
-                    {slide.visualIcon}
-                  </div>
-                  <p className="relative z-10 mt-3 text-xs font-semibold tracking-wider text-slate-400 uppercase">
-                    Raj Biosis Private Limited
+            {/* Dynamic Description (no fallback text) */}
+            {description && (
+              <p className="mt-3 sm:mt-4 text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl font-normal">
+                {description}
+              </p>
+            )}
+
+            {/* Key Trust Highlights */}
+            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-medium text-slate-300">
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 size={15} className="text-emerald-400" />
+                Zero Testing Error Rate
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 size={15} className="text-cyan-400" />
+                Fast On-Site Calibration
+              </span>
+              <span className="flex items-center gap-1.5">
+                <CheckCircle2 size={15} className="text-amber-400" />
+                Pan-India Supply Network
+              </span>
+            </div>
+
+            {/* Dynamic Buttons (no fallback text, dynamic links) */}
+            {(button1Text || button2Text) && (
+              <div className="mt-6 flex flex-wrap items-center gap-3.5">
+                {button1Text && (
+                  <Link href={button1Link}>
+                    <button className="group flex h-11 sm:h-12 items-center gap-2.5 rounded-xl bg-gradient-to-r from-blue-600 via-teal-500 to-cyan-500 px-6 text-sm font-bold text-white shadow-lg shadow-cyan-500/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-cyan-500/30">
+                      <span>{button1Text}</span>
+                      <ArrowRight size={17} className="transition-transform duration-200 group-hover:translate-x-1" />
+                    </button>
+                  </Link>
+                )}
+
+                {button2Text && (
+                  <Link href={button2Link}>
+                    <button className="flex h-11 sm:h-12 items-center gap-2 rounded-xl border border-slate-700 bg-slate-900/90 px-5 text-sm font-bold text-slate-200 transition-all duration-300 hover:border-amber-400/60 hover:bg-slate-800 hover:text-white">
+                      <PhoneCall size={16} className="text-amber-400" />
+                      <span>{button2Text}</span>
+                    </button>
+                  </Link>
+                )}
+              </div>
+            )}
+          </motion.div>
+
+          {/* Right Showcase Card (5 cols) */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.45, delay: 0.1 }}
+            className="lg:col-span-5 relative flex justify-center lg:justify-end"
+          >
+            <div className="w-full max-w-md rounded-2xl border border-slate-800 bg-slate-900/80 p-5 sm:p-6 backdrop-blur-xl shadow-xl shadow-slate-950/60">
+              {/* Header Badges */}
+              <div className="flex items-center justify-between gap-2 mb-4">
+                <div className="inline-flex items-center gap-1.5 rounded-lg bg-slate-800 px-3 py-1 text-xs font-bold text-amber-300 border border-slate-700">
+                  <ShieldCheck size={13} className="text-amber-400" />
+                  ISO Certified Systems
+                </div>
+                <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400">
+                  <BadgeCheck size={14} className="text-teal-400" />
+                  AMC Support
+                </div>
+              </div>
+
+              {/* Compact Stats Row */}
+              <div className="grid grid-cols-2 gap-3 mb-4">
+                <div className="rounded-xl border border-slate-800 bg-slate-950/80 p-3.5 text-center">
+                  <div className="text-xl sm:text-2xl font-black text-amber-400">500+</div>
+                  <div className="text-[11px] font-medium text-slate-400 mt-0.5">Labs Serviced</div>
+                </div>
+                <div className="rounded-xl border border-slate-800 bg-slate-950/80 p-3.5 text-center">
+                  <div className="text-xl sm:text-2xl font-black text-teal-400">99.9%</div>
+                  <div className="text-[11px] font-medium text-slate-400 mt-0.5">Report Precision</div>
+                </div>
+              </div>
+
+              {/* Quick Feature Banner */}
+              <div className="flex items-center gap-3 rounded-xl border border-slate-800/80 bg-slate-950/50 p-3">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-600/20 text-cyan-400 flex-shrink-0">
+                  <Microscope size={18} />
+                </div>
+                <div className="overflow-hidden">
+                  <p className="text-xs font-bold text-slate-200 truncate">
+                    Clinical Diagnostic Equipment
                   </p>
-                </div>
-
-                {/* Live Stats Row */}
-                <div className="mt-6 grid grid-cols-2 gap-4">
-                  {slide.stats.map((st, i) => (
-                    <div key={i} className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4 text-center">
-                      <h4 className="text-2xl font-black text-amber-400">{st.val}</h4>
-                      <p className="mt-1 text-xs font-medium text-slate-400">{st.label}</p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Trust Footer line */}
-                <div className="mt-6 pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
-                  <span className="flex items-center gap-1.5">
-                    <BadgeCheck size={15} className="text-teal-400" />
-                    ISO 9001:2015 Certified
-                  </span>
-                  <span className="font-semibold text-slate-300">Fast Delivery</span>
+                  <p className="text-[11px] text-slate-400 truncate">
+                    Analyzers, Electrolyte Reagents & Kits
+                  </p>
                 </div>
               </div>
             </div>
           </motion.div>
-        </AnimatePresence>
-
-        {/* Carousel Navigation Bar */}
-        <div className="mt-14 flex flex-wrap items-center justify-between gap-6 pt-8 border-t border-slate-800/80">
-          {/* Slide Dots / Indicators */}
-          <div className="flex items-center gap-3">
-            {slides.map((s, idx) => (
-              <button
-                key={s.id}
-                onClick={() => setCurrentSlide(idx)}
-                aria-label={`Go to slide ${idx + 1}`}
-                className={`group relative h-3 rounded-full transition-all duration-500 ${
-                  currentSlide === idx ? "w-10 bg-gradient-to-r from-cyan-400 to-teal-400" : "w-3 bg-slate-700 hover:bg-slate-500"
-                }`}
-              >
-                {currentSlide === idx && (
-                  <span className="absolute inset-0 rounded-full bg-cyan-400/40 animate-ping" />
-                )}
-              </button>
-            ))}
-            <span className="ml-3 text-xs font-semibold text-slate-400">
-              0{currentSlide + 1} / 0{slides.length}
-            </span>
-          </div>
-
-          {/* Quick Stats Grid Pill */}
-          <div className="hidden md:flex items-center gap-8 text-xs font-semibold text-slate-300 bg-slate-900/60 px-6 py-3 rounded-full border border-slate-800">
-            <div><strong className="text-white font-bold">10+ Years</strong> Experience</div>
-            <div className="h-3 w-[1px] bg-slate-700" />
-            <div><strong className="text-white font-bold">500+</strong> Labs Serviced</div>
-            <div className="h-3 w-[1px] bg-slate-700" />
-            <div><strong className="text-white font-bold">24/7</strong> AMC Support</div>
-          </div>
-
-          {/* Prev / Next Controls */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={prevSlide}
-              aria-label="Previous slide"
-              className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-700 bg-slate-900 text-slate-200 transition-all hover:border-cyan-400 hover:bg-slate-800 hover:text-white"
-            >
-              <ChevronLeft size={20} />
-            </button>
-            <button
-              onClick={nextSlide}
-              aria-label="Next slide"
-              className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-700 bg-slate-900 text-slate-200 transition-all hover:border-cyan-400 hover:bg-slate-800 hover:text-white"
-            >
-              <ChevronRight size={20} />
-            </button>
-          </div>
         </div>
       </div>
     </section>

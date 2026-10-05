@@ -241,3 +241,4 @@ export function computePageSeoScore(pageData = {}) {
 
   return score;
 }
+
